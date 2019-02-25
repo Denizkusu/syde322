@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:_322Mobile"
+             x:Class="_322Mobile.LoginPage">
+
+    <StackLayout Margin="10,35,10,10">
+        <Label Text="Login"
+               HorizontalOptions="Center"
+               FontAttributes="Bold" />
+        <Editor x:Name="username"
+                Placeholder="Username"
+                HeightRequest="45" 
+                Margin="0,10"/>
+        <Editor x:Name="password"
+                Placeholder="Password"
+                HeightRequest="45" 
+                Margin="0,10"/>
+        <Button Text="Login" Clicked="OnLoginButtonClicked"></Button>
+        <Label x:Name="temp"></Label>
+    </StackLayout>
+
+</ContentPage>
