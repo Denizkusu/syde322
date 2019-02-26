@@ -6,8 +6,8 @@
              BackgroundColor="#1F2631">
     
     <Grid>
-        <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="100" TextColor="#202325">🅱️</Label>
-    <StackLayout VerticalOptions="End" Spacing="5" Padding="0" Margin="0,25">
+        <Image VerticalOptions="Center" HorizontalOptions="Center" Source="bfLogo.png" HeightRequest="250" WidthRequest="250"></Image>
+        <StackLayout VerticalOptions="End" Spacing="5" Padding="0" Margin="0,25">
         <Button Text="Login" Clicked="OnLoginButtonClicked" 
                 Margin="10,5" BackgroundColor="#00aced" TextColor="#fff" 
                 FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"

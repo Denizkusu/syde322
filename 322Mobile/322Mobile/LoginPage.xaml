@@ -6,16 +6,21 @@
              BackgroundColor="#1F2631">
 
     <StackLayout VerticalOptions="Center" Margin="10,35,10,10">
-        <Editor x:Name="username"
-                Placeholder="Username"
+         <Entry x:Name="email"
+                Placeholder="Email"
                 HeightRequest="45" 
                 Margin="10,5"
-                />
-        <Editor x:Name="password"
+                Unfocused="Handle_Unfocused_Email"/>
+            <Label x:Name="emailValidation" TextColor="Red"></Label>
+
+          <Entry x:Name="password"
                 Placeholder="Password"
                 HeightRequest="45" 
                 Margin="10,5"
-                />
+
+                IsPassword="true"/>
+        
+        
         <Button Text="Login" Clicked="OnLoginButtonClicked" 
                 Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
                 FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"

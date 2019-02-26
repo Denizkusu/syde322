@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
 using Xamarin.Forms;
+using System.Text.RegularExpressions;
 
 namespace _322Mobile
 {
@@ -20,14 +21,31 @@ namespace _322Mobile
 
         }
 
+        void Handle_Unfocused_Email(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            // Ensure email is of x@y.z
+            Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+          RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            if (!rx.IsMatch(email.Text) && email.Text != "")
+            {
+                emailValidation.Text = "You must enter a valid email address";
+            }
+            else
+            {
+                emailValidation.Text = "";
+            }
+        }
+
         async void OnLoginButtonClicked(object sender, System.EventArgs e)
         {
             error.Text = "";
             var values = new Dictionary<string, string>
             {
-               { "Username", username.Text },
+               { "Username", email.Text },
                { "Password", password.Text }
             };
+
 
             var content = new FormUrlEncodedContent(values);
 
@@ -37,9 +55,11 @@ namespace _322Mobile
                 var responseString = await response.Content.ReadAsStringAsync();
                 Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
                 await Navigation.PopToRootAsync();
+
             }
             catch (WebException ex)
             {
+
                 if (ex.Response is HttpWebResponse)
                 {
                     var httpResponse = ex.Response as HttpWebResponse;
@@ -49,6 +69,9 @@ namespace _322Mobile
                 {
                     error.Text = ex.Message;
                 }
+
+                await Navigation.PushAsync(new HomePage());
+
             }
         }
     }

@@ -1,31 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
-using Xamarin.Forms;
 
+using Xamarin.Forms;
 
 namespace _322Mobile
 {
-    public partial class HomePage : ContentPage
+    public partial class SearchResultsPage : ContentPage
     {
-        public HomePage()
+        public SearchResultsPage()
         {
             InitializeComponent();
-
         }
+
+
         void OnProfileButtonClicked(object sender, System.EventArgs e)
         {
             //(temp).Text = username.Text + password.Text+email.Text;
+
         }
+
+        void ForgotPasswordCommand(object sender, System.EventArgs e)
+        {
+            //(temp).Text = username.Text + password.Text+email.Text;
+            DisplayAlert("Alert", "You have been alerted", "OK");
+
+        }
+
+
         async void OnSearchCompletedAsync(object sender, System.EventArgs e)
         {
             //DisplayAlert("Alert", "You have been alerted", "OK");
             await Navigation.PushAsync(new SearchResultsPage());
             //(temp).Text = username.Text + password.Text+email.Text;
         }
+        void OnButC(object sender, System.EventArgs e)
+        {
+            //(temp).Text = username.Text + password.Text+email.Text;
+        }
     }
+
+
 }

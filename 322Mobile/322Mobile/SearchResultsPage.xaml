@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="_322Mobile.SearchResultsPage"
+             BackgroundColor="#1F2631">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="dds.png" Clicked="OnProfileButtonClicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="10" Margin="20,20,20,0">
+        <Entry x:Name="email"
+                Placeholder="Search for Phones..."
+                VerticalOptions="Start"
+               Completed="OnSearchCompletedAsync"/>
+        <Label x:Name="emailValidation" TextColor="Red"></Label>
+        
+        <Label TextColor="#ffffff" FontSize = "25" Text="Results"></Label>
+
+              <!--  <Button Image="xr.jpg" Text="iPhone XR " Clicked="OnButC" 
+                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
+                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                HeightRequest="100"></Button>    -->
+            
+            
+        <Grid RowSpacing="20">   
+                <Grid.RowDefinitions>
+    <RowDefinition Height="*" />
+    <RowDefinition Height="*" />
+  </Grid.RowDefinitions>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="*" />
+    <ColumnDefinition Width="*" />
+  </Grid.ColumnDefinitions>
+        <Image Source="xr.png" Grid.Row="0" Grid.Column="0" HeightRequest="150"></Image>
+        <ContentView  Grid.Row="0"
+               Grid.Column="1" BackgroundColor="#00aced" Padding="10,10,10,10" HeightRequest="150">
+
+          
+        <Label 
+               TextColor="#fff"
+
+
+               FontSize="18"
+               >
+               
+                    <Label.Text >
+                        iPhone XR
+                        Overall Score: 82/100
+                        Price: $850
+                    </Label.Text>
+        </Label>
+                    </ContentView> 
+                
+                
+         <Image Source="xs.png" Grid.Row="1" Grid.Column="1" HeightRequest="150"></Image>
+        <ContentView  Grid.Row="1"
+               Grid.Column="0" BackgroundColor="#00aced" Padding="10,10,10,10" HeightRequest="150">
+
+          
+        <Label 
+               TextColor="#fff"
+
+
+               FontSize="18"
+               >
+               
+                    <Label.Text >
+                        iPhone XS
+                        Overall Score: 76/100
+                        Price: $985
+                    </Label.Text>
+        </Label>
+                    </ContentView> 
+                
+                
+                          
+         <Image Source="xsmax.jp2" Grid.Row="2" Grid.Column="0" HeightRequest="150"></Image>
+        <ContentView  Grid.Row="2"
+               Grid.Column="1" BackgroundColor="#00aced" Padding="10,10,10,10" HeightRequest="150">
+
+          
+        <Label 
+               TextColor="#fff"
+
+
+               FontSize="18"
+               >
+               
+                    <Label.Text >
+                        iPhone XS Max
+                        Overall Score: 76/100
+                        Price: $1200
+                    </Label.Text>
+        </Label>
+                    </ContentView> 
+                
+        </Grid>  
+            
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

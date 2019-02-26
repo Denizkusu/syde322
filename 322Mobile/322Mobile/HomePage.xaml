@@ -1,7 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="_322Mobile.HomePage">
+             x:Class="_322Mobile.HomePage" NavigationPage.HasBackButton="False"
+             BackgroundColor="#1F2631">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="dds.png" Clicked="OnProfileButtonClicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Label Text="HI"></Label>
+        
+        <StackLayout Spacing="10" Margin="20,20,20,0">
+        <Entry x:Name="email"
+                Placeholder="Search for Phones..."
+                VerticalOptions="Start"
+               Completed="OnSearchCompletedAsync"/>
+        <Label x:Name="emailValidation" TextColor="Red"></Label>
+        
+        <Label TextColor="#ffffff" FontSize = "25" Text="Home"></Label>
+            
+            
+           
+        <Grid RowSpacing="20">   
+                <Grid.RowDefinitions>
+    <RowDefinition Height="*" />
+    <RowDefinition Height="*" />
+  </Grid.RowDefinitions>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="*" />
+    <ColumnDefinition Width="*" />
+                    
+     </Grid.ColumnDefinitions>
+     <Button Grid.Row="0" Grid.Column="0" Text="Searched Phones" Clicked="OnProfileButtonClicked" 
+                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
+                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                HeightRequest="100"></Button>   
+                
+     <ContentView   Grid.Row = "0" Grid.Column="1" Padding="20,20,20,20" HeightRequest="100">       
+     <Label BackgroundColor="#00aced" TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold">
+                    <Label.Text>
+                        Past 
+                        Searches
+                        
+                    </Label.Text>
+                </Label>    
+      </ContentView>
+                
+                 <Button Grid.Row="1" Grid.Column="0" Text="Submit a Review" Clicked="OnProfileButtonClicked" 
+                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
+                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                HeightRequest="100"></Button>    
+                 <Button Grid.Row="1" Grid.Column="1" Text="Track Prices" Clicked="OnProfileButtonClicked" 
+                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
+                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                HeightRequest="100"></Button>    
+            
+            
+     </Grid>
+        </StackLayout>
+        
+        
     </ContentPage.Content>
 </ContentPage>
