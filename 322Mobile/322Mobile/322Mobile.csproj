@@ -14,9 +14,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="HomePage.cs" />
+    <Compile Remove="MyPage.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="EmptyXmlFile.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="MyPage.xaml" />
+  </ItemGroup>
 </Project>

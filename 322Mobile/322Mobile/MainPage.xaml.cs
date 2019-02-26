@@ -11,8 +11,8 @@ namespace _322Mobile
     {
         public MainPage()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
-            BackgroundColor.Equals("#FFF");
+            //NavigationPage.SetHasNavigationBar(this, false);
+            //BackgroundColor.Equals("#FFF");
             InitializeComponent();
 
         }

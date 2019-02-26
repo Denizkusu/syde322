@@ -20,7 +20,6 @@
                 Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
                 FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
                 HeightRequest="50"></Button>
-        <Label x:Name="temp"></Label>
+        <Label x:Name="error" TextColor="Red"></Label>
     </StackLayout>
-
 </ContentPage>
