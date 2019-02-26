@@ -6,22 +6,23 @@
              BackgroundColor="#1F2631">
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="Center">
-            <Editor x:Name="email"
+            <Entry x:Name="email"
                 Placeholder="Email"
                 HeightRequest="50" 
-                Unfocused="Handle_Unfocused_Email"
-                    />
+                Unfocused="Handle_Unfocused_Email"/>
             <Label x:Name="emailValidation" TextColor="Red"></Label>
-            <Editor x:Name="password"
+            <Entry x:Name="password"
                 Placeholder="Password"
                 HeightRequest="50" 
-                Unfocused="Handle_Unfocused_Password"/>
-            <Label x:Name="passwordValidation"></Label>
-            <PasswordBox x:Name="passwordConfirm"
+                Unfocused="Handle_Unfocused_Password"
+                IsPassword="true"/>
+            <Label x:Name="passwordValidation" TextColor="Red"></Label>
+            <Entry x:Name="passwordConfirm"
                 Placeholder="Confirm Password"
                 HeightRequest="50" 
-                Unfocused="Handle_Unfocused_Password_Confirmation"/>
-            <Label x:Name="passwordConfirmationValidation"></Label>
+                Unfocused="Handle_Unfocused_Password_Confirmation"
+                IsPassword="true"/>
+            <Label x:Name="passwordConfirmationValidation" TextColor="Red"></Label>
             <Button Text="Register" Clicked="OnRegisterButtonClicked" 
                             Margin="0,20" BackgroundColor="#00aced" TextColor="#fff" 
                             FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
