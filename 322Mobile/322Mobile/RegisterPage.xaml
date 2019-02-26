@@ -1,26 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="_322Mobile.RegisterPage">
+             x:Class="_322Mobile.RegisterPage"
+             xmlns:m="Windows.UI.Xaml.Controls"
+             BackgroundColor="#1F2631">
     <ContentPage.Content>
-        <StackLayout Margin="10,35,10,10">
-            <Label Text="Register"
-               HorizontalOptions="Center"
-               FontAttributes="Bold" />
-            <Editor x:Name="username"
-                Placeholder="Username"
-                HeightRequest="50" 
-                Margin="0,10"/>
-            <Editor x:Name="password"
-                Placeholder="Password"
-                HeightRequest="50" 
-                Margin="0,10"/>
+        <StackLayout Margin="20" VerticalOptions="Center">
             <Editor x:Name="email"
                 Placeholder="Email"
                 HeightRequest="50" 
-                Margin="0,10"/>
-            <Button Text="Register" Clicked="OnRegisterButtonClicked"></Button>
-            <Label x:Name="temp"></Label>
+                Unfocused="Handle_Unfocused_Email"
+                    />
+            <Label x:Name="emailValidation" TextColor="Red"></Label>
+            <Editor x:Name="password"
+                Placeholder="Password"
+                HeightRequest="50" 
+                Unfocused="Handle_Unfocused_Password"/>
+            <Label x:Name="passwordValidation"></Label>
+            <PasswordBox x:Name="passwordConfirm"
+                Placeholder="Confirm Password"
+                HeightRequest="50" 
+                Unfocused="Handle_Unfocused_Password_Confirmation"/>
+            <Label x:Name="passwordConfirmationValidation"></Label>
+            <Button Text="Register" Clicked="OnRegisterButtonClicked" 
+                            Margin="0,20" BackgroundColor="#00aced" TextColor="#fff" 
+                            FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                            HeightRequest="60"></Button> 
+               
+
+           
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

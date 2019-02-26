@@ -95,6 +95,7 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="322Mobile.iOS.csproj" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -155,10 +156,6 @@
     <ProjectReference Include="..\322Mobile\322Mobile.csproj">
       <Project>{3fabebec-d702-47d4-830d-4c59763102fb}</Project>
       <Name>322Mobile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\_322Mobile\_322Mobile.csproj">
-      <Project>{544EF9B8-FF03-404C-9CEB-9217F3CEF4D6}</Project>
-      <Name>_322Mobile</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

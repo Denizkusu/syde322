@@ -1,12 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:_322Mobile"
-             x:Class="_322Mobile.MainPage">
+             x:Class="_322Mobile.MainPage"
+             BackgroundColor="#1F2631">
+    
+    <Grid>
+        <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="100" TextColor="#202325">🅱️</Label>
+    <StackLayout VerticalOptions="End" Spacing="5" Padding="0" Margin="0,25">
+        <Button Text="Login" Clicked="OnLoginButtonClicked" 
+                Margin="10,5" BackgroundColor="#00aced" TextColor="#fff" 
+                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                HeightRequest="60"></Button>
+            
+        <Button Text="Register" Clicked="OnRegisterButtonClicked" 
+                Margin="10,5" BackgroundColor="#00aced" TextColor="#fff" 
+                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
+                HeightRequest="60"></Button>
+    </StackLayout>        
+    </Grid>
 
-    <StackLayout VerticalOptions="End" Spacing="0" Padding="0" Margin="0">
-        <Button Text="Login" Clicked="OnLoginButtonClicked" Margin="0"></Button>
-        <Button Text="Register" Clicked="OnRegisterButtonClicked" Margin="0"></Button>
-    </StackLayout>
 
 </ContentPage>
