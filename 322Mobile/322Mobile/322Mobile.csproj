@@ -15,7 +15,9 @@
 
   <ItemGroup>
     <Compile Remove="HomePage.cs" />
-    <Compile Remove="MyPage.xaml.cs" />
+    <Compile Remove=".cs" />
+    <Compile Remove="T4Template.cs" />
+    <Compile Remove="MainPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="LoginPage.xaml.cs">
@@ -28,8 +30,9 @@
 
   <ItemGroup>
     <None Remove="EmptyXmlFile.xml" />
+    <None Remove=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Remove="MyPage.xaml" />
+    <None Include="322Mobile.csproj" />
   </ItemGroup>
 </Project>
