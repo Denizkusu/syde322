@@ -6,6 +6,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Spacing="10" Margin="20,20,20,0">
+        <Label TextColor="#ffffff" FontSize = "25" Text="Search"></Label> 
         <Entry x:Name="email"
                 Placeholder="Search for Phones..."
                 VerticalOptions="Start"

@@ -4,11 +4,15 @@
              BackgroundColor="#1F2631">
     
     <ContentPage.ToolbarItems>
+    
         <ToolbarItem Icon="dds.png" Clicked="OnProfileButtonClicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         
+        
         <StackLayout Spacing="10" Margin="20,20,20,0">
+        <Label TextColor="#ffffff" FontSize = "25" Text="Search"></Label>    
+        
         <Entry x:Name="email"
                 Placeholder="Search for Phones..."
                 VerticalOptions="Start"
@@ -29,30 +33,43 @@
     <ColumnDefinition Width="*" />
                     
      </Grid.ColumnDefinitions>
-     <Button Grid.Row="0" Grid.Column="0" Text="Searched Phones" Clicked="OnProfileButtonClicked" 
-                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
-                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-                HeightRequest="100"></Button>   
-                
-     <ContentView   Grid.Row = "0" Grid.Column="1" Padding="20,20,20,20" HeightRequest="100">       
-     <Label BackgroundColor="#00aced" TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold">
+     <ContentView   BackgroundColor="#00aced" Grid.Row = "0" Grid.Column="0" Padding="10,10,10,10" HeightRequest="100">       
+     <Label  TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold">
                     <Label.Text>
                         Past 
                         Searches
                         
                     </Label.Text>
                 </Label>    
+      </ContentView>  
+                
+     <ContentView BackgroundColor="#00aced"  Grid.Row = "0" Grid.Column="1" Padding="10,10,10,10" >       
+     <Label HeightRequest="100"  TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold" FontSize="18">
+                    <Label.Text>
+                        Compare 
+                        Phones
+                        
+                    </Label.Text>
+                </Label>    
       </ContentView>
                 
-                 <Button Grid.Row="1" Grid.Column="0" Text="Submit a Review" Clicked="OnProfileButtonClicked" 
-                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
-                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-                HeightRequest="100"></Button>    
-                 <Button Grid.Row="1" Grid.Column="1" Text="Track Prices" Clicked="OnProfileButtonClicked" 
-                Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
-                FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-                HeightRequest="100"></Button>    
+                 <ContentView   BackgroundColor="#00aced" Grid.Row = "1" Grid.Column="0" Padding="10,10,10,10" HeightRequest="100">       
+     <Label TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold">
+                    <Label.Text>
+                        Submit a 
+                        Review
+                    </Label.Text>
+                </Label>    
+      </ContentView>  
             
+                <ContentView  BackgroundColor="#00aced" Grid.Row = "1" Grid.Column="1" Padding="10,10,10,10" HeightRequest="100">       
+     <Label  TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold">
+                    <Label.Text>
+                        Track 
+                        Prices
+                    </Label.Text>
+                </Label>    
+      </ContentView>
             
      </Grid>
         </StackLayout>
