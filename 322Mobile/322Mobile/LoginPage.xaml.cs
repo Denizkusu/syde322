@@ -7,72 +7,160 @@ using System.Net.Http;
 using System.Net;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Xamarin.Essentials;
+
 
 namespace _322Mobile
 {
-    public partial class LoginPage : ContentPage
+  public partial class LoginPage : ContentPage
+  {
+    private static HttpClient client;
+    private static bool emailCondition;
+    private static bool initialEntry; 
+    public LoginPage()
     {
-        private static HttpClient client;
-        public LoginPage()
-        {
-            client = new HttpClient();
-            BackgroundColor.Equals("#FFF");
-            InitializeComponent();
+      client = new HttpClient();
+      emailCondition = false;
+      initialEntry = true;  
+      BackgroundColor.Equals("#FFF");
+      InitializeComponent();
 
+    }
+
+    void Handle_Unfocused_Email(object sender, Xamarin.Forms.FocusEventArgs e)
+    {
+      validateEmail();
+      initialEntry = false; 
+    }
+
+    void validateEmail()
+    {
+      // Ensure email is of x@y.z
+      Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+      RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+      if ((!rx.IsMatch(email.Text) && email.Text != "") || email.Text == null || email.Text == "")
+      {
+        emailCondition = false;
+        button1.IsEnabled = false;
+        emailValidation.Text = "You must enter a valid email address";
+      }
+      else
+      {
+        emailValidation.Text = "";
+        emailCondition = true; 
+        if (password.Text != null && password.Text != "")
+        {
+          button1.IsEnabled = true;
         }
 
-        void Handle_Unfocused_Email(object sender, Xamarin.Forms.FocusEventArgs e)
-        {
-            // Ensure email is of x@y.z
-            Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
-          RegexOptions.Compiled | RegexOptions.IgnoreCase);
+      }
 
-            if (!rx.IsMatch(email.Text) && email.Text != "")
-            {
-                emailValidation.Text = "You must enter a valid email address";
-            }
-            else
-            {
-                emailValidation.Text = "";
-            }
+    }
+
+    void validateEmailSoft()
+    {
+      // Ensure email is of x@y.z
+      Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+      RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+      if ((!rx.IsMatch(email.Text) && email.Text != "") || email.Text == null || email.Text == "")
+      {
+        emailCondition = false;
+        button1.IsEnabled = false;
+      }
+      else
+      {
+        emailCondition = true;
+        if (password.Text != null && password.Text != "")
+        {
+          button1.IsEnabled = true;
         }
 
-        async void OnLoginButtonClicked(object sender, System.EventArgs e)
+      }
+
+    }
+
+
+    void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+    {
+      if (password.Text != null && password.Text != ""){
+        if (emailCondition == true)
         {
-            error.Text = "";
-            var values = new Dictionary<string, string>
+          button1.IsEnabled = true; 
+        }
+      }
+      else
+      {
+        button1.IsEnabled = false;  
+      }
+    }
+
+    void Handle_TextChanged_1(object sender, Xamarin.Forms.TextChangedEventArgs e)
+    {
+      if (initialEntry == false)
+      {
+        validateEmail(); 
+
+      }
+      else
+      {
+        validateEmailSoft(); 
+      }
+    }
+
+    async void OnLoginButtonClicked(object sender, System.EventArgs e)
+    {
+
+      
+      
+      error.Text = "";
+      var values = new Dictionary<string, string>
             {
                { "Username", email.Text },
                { "Password", password.Text }
             };
 
 
-            var content = new FormUrlEncodedContent(values);
+      var jsonC = JsonConvert.SerializeObject(values);
+      var content = new StringContent(jsonC, Encoding.UTF8, "application/json");
 
-            try
-            {
-                var response = await client.PostAsync("https://localhost:5001/api/login", content);
-                var responseString = await response.Content.ReadAsStringAsync();
-                Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
-                await Navigation.PopToRootAsync();
+      try
+      {
+        var response = await client.PostAsync("https://ehl.me/api/login", content);
+        var responseString = await response.Content.ReadAsStringAsync();
+        Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
 
-            }
-            catch (WebException ex)
-            {
-
-                if (ex.Response is HttpWebResponse)
-                {
-                    var httpResponse = ex.Response as HttpWebResponse;
-                    error.Text =httpResponse.StatusDescription;
-                }
-                else
-                {
-                    error.Text = ex.Message;
-                }
-
-                await Navigation.PushAsync(new HomePage());
-
-            }
+        try
+        {
+          await SecureStorage.SetAsync("oauth_token", responseString);
         }
+        catch (Exception ex)
+        {
+          // Possible that device doesn't support secure storage on device.
+          // enable secure storage
+        }
+        await Navigation.PopToRootAsync();
+
+
+      }
+      catch (WebException ex)
+      {
+
+        if (ex.Response is HttpWebResponse)
+        {
+          var httpResponse = ex.Response as HttpWebResponse;
+          error.Text = httpResponse.StatusDescription;
+        }
+        else
+        {
+          error.Text = ex.Message;
+        }
+
+        await Navigation.PushAsync(new HomePage());
+
+      }
     }
+  }
 }

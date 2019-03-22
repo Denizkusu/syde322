@@ -9,24 +9,31 @@
             <Entry x:Name="email"
                 Placeholder="Email"
                 HeightRequest="50" 
-                Unfocused="Handle_Unfocused_Email"/>
+                Unfocused="Handle_Unfocused_Email"
+                TextChanged="Handle_TextChanged"/>
             <Label x:Name="emailValidation" TextColor="Red"></Label>
             <Entry x:Name="password"
                 Placeholder="Password"
                 HeightRequest="50" 
                 Unfocused="Handle_Unfocused_Password"
-                IsPassword="true"/>
+                IsPassword="true"
+                TextChanged="Handle_TextChanged_1"/>
             <Label x:Name="passwordValidation" TextColor="Red"></Label>
             <Entry x:Name="passwordConfirm"
                 Placeholder="Confirm Password"
                 HeightRequest="50" 
                 Unfocused="Handle_Unfocused_Password_Confirmation"
-                IsPassword="true"/>
+                IsPassword="true"
+                TextChanged="Handle_TextChanged_2"/>
             <Label x:Name="passwordConfirmationValidation" TextColor="Red"></Label>
-            <Button Text="Register" Clicked="OnRegisterButtonClicked" 
+            <Button x:Name="button1" Text="Register" Clicked="OnRegisterButtonClicked" 
                             Margin="0,20" BackgroundColor="#00aced" TextColor="#fff" 
                             FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-                            HeightRequest="60"></Button> 
+                            HeightRequest="60" IsEnabled="false">
+
+            </Button> 
+            
+            <Label x:Name="error" TextColor="Red"></Label>
                
 
            

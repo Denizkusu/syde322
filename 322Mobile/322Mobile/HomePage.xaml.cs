@@ -10,22 +10,22 @@ using Xamarin.Forms;
 
 namespace _322Mobile
 {
-    public partial class HomePage : ContentPage
+  public partial class HomePage : ContentPage
+  {
+    public HomePage()
     {
-        public HomePage()
-        {
-            InitializeComponent();
+      InitializeComponent();
 
-        }
-        void OnProfileButtonClicked(object sender, System.EventArgs e)
-        {
-            //(temp).Text = username.Text + password.Text+email.Text;
-        }
-        async void OnSearchCompletedAsync(object sender, System.EventArgs e)
-        {
-            //DisplayAlert("Alert", "You have been alerted", "OK");
-            await Navigation.PushAsync(new SearchResultsPage());
-            //(temp).Text = username.Text + password.Text+email.Text;
-        }
     }
+    void OnProfileButtonClicked(object sender, System.EventArgs e)
+    {
+      //(temp).Text = username.Text + password.Text+email.Text;
+    }
+    async void OnSearchCompletedAsync(object sender, System.EventArgs e)
+    {
+      //DisplayAlert("Alert", "You have been alerted", "OK");
+      await Navigation.PushAsync(new SearchResultsPage());
+      //(temp).Text = username.Text + password.Text+email.Text;
+    }
+  }
 }

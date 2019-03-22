@@ -10,21 +10,35 @@
                 Placeholder="Email"
                 HeightRequest="45" 
                 Margin="10,5"
-                Unfocused="Handle_Unfocused_Email"/>
+                Unfocused="Handle_Unfocused_Email"
+                TextChanged="Handle_TextChanged_1"/>
             <Label x:Name="emailValidation" TextColor="Red"></Label>
 
           <Entry x:Name="password"
                 Placeholder="Password"
                 HeightRequest="45" 
                 Margin="10,5"
-
-                IsPassword="true"/>
+                IsPassword="true"
+                TextChanged="Handle_TextChanged"/>
         
-        
-        <Button Text="Login" Clicked="OnLoginButtonClicked" 
+        <Button x:Name="button1" Text="Login" Clicked="OnLoginButtonClicked" 
                 Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 
                 FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-                HeightRequest="50"></Button>
+                HeightRequest="50" IsEnabled="false">
+            
+            
+<!--            <Button.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding Source={x:Reference password},
+                                               Path=Text.Length}"
+                             Value="0">
+                       <Trigger.EnterActions>
+                          <local:EnterTriggerAction />
+                        </Trigger.EnterActions>
+                </DataTrigger>
+            </Button.Triggers>-->
+            
+        </Button>
         <Label x:Name="error" TextColor="Red"></Label>
     </StackLayout>
 </ContentPage>

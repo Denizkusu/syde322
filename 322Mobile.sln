@@ -140,4 +140,33 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F428CC3-797A-4228-A083-C8B9772B0E46}
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 80
+		$1.TabWidth = 2
+		$1.TabsToSpaces = True
+		$1.IndentWidth = 2
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.inheritsSet = null
+		$3.scope = text/x-json
+		$0.JSONFormattingPolicy = $4
+		$4.AutoStructureCompletion = True
+		$4.BracePositions = SemiExpanded
+		$4.FormatOnPaste = True
+		$4.scope = text/x-json
+		$0.TextStylePolicy = $5
+		$5.FileWidth = 80
+		$5.TabWidth = 2
+		$5.TabsToSpaces = True
+		$5.IndentWidth = 2
+		$5.scope = application/xaml+xml
+		$0.XmlFormattingPolicy = $6
+		$6.inheritsSet = null
+		$6.scope = application/xaml+xml
+		$0.StandardHeader = $7
+	EndGlobalSection
 EndGlobal
