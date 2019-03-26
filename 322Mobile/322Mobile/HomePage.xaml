@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="_322Mobile.HomePage" NavigationPage.HasBackButton="False" BackgroundColor="#1F2631">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem Icon="dds.png" Clicked="OnProfileButtonClicked" />
-  </ContentPage.ToolbarItems>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="using:_322Mobile"
+             x:Class="_322Mobile.HomePage" 
+
+             NavigationPage.HasBackButton="False" BackgroundColor="#1F2631" 
+             Title="Home" Icon="dds.png">
+ 
+    
+    <!--<ContentPage.ToolbarItems>
+    <ToolbarItem  Clicked="OnProfileButtonClicked" />
+  </ContentPage.ToolbarItems>-->
+    
+
+    
   <ContentPage.Content>
     <StackLayout Spacing="10" Margin="20,20,20,0">
-      <Entry x:Name="search" Placeholder="Search for Phones..." VerticalOptions="Center" Completed="OnSearchCompletedAsync" />
+            <Label TextColor="#ffffff" FontSize="25" Text="Search">
+      </Label>
+      <Entry x:Name="searchText" Placeholder="Search for Phones..." VerticalOptions="Center" IsTextPredictionEnabled="false" Completed="OnSearchCompletedAsync" />
       <Label x:Name="emailValidation" TextColor="Red">
       </Label>
-      <Label TextColor="#ffffff" FontSize="25" Text="Home">
-      </Label>
+      
+            
+            
       <!--<Grid RowSpacing="20">
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />

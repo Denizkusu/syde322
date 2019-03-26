@@ -11,6 +11,7 @@
                 HeightRequest="45" 
                 Margin="10,5"
                 Unfocused="Handle_Unfocused_Email"
+                
                 TextChanged="Handle_TextChanged_1"/>
             <Label x:Name="emailValidation" TextColor="Red"></Label>
 

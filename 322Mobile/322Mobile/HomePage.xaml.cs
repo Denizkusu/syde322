@@ -24,7 +24,10 @@ namespace _322Mobile
     async void OnSearchCompletedAsync(object sender, System.EventArgs e)
     {
       //DisplayAlert("Alert", "You have been alerted", "OK");
-      await Navigation.PushAsync(new SearchResultsPage());
+
+      await Navigation.PushAsync(new SearchResultsPage(searchText.Text));
+      searchText.Text = string.Empty;
+
       //(temp).Text = username.Text + password.Text+email.Text;
     }
   }

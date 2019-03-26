@@ -50,9 +50,23 @@ namespace _322Mobile
       {
         var response = await client.PostAsync("https://ehl.me/api/user", content);
         var responseString = await response.Content.ReadAsStringAsync();
-        Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
 
-        await Navigation.PopToRootAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+          error.Text = responseString;
+          button1.IsEnabled = false;
+        }
+        else
+        {
+          Navigation.InsertPageBefore(new LoginPage(), Navigation.NavigationStack[1]);
+
+
+
+          await Navigation.PopAsync();
+
+          //await Navigation.PushAsync(new HomePage());
+        }
+
 
 
       }
@@ -68,8 +82,6 @@ namespace _322Mobile
         {
           error.Text = ex.Message;
         }
-
-        await Navigation.PushAsync(new HomePage());
 
       }
 
@@ -188,6 +200,10 @@ namespace _322Mobile
 
     void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
     {
+      if (error.Text != "")
+      {
+        error.Text = "";
+      }
       if (initialEntry == false)
       {
         validateEmail();

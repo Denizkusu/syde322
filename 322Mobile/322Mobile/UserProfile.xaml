@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="_322Mobile.UserProfile" NavigationPage.HasBackButton="False" BackgroundColor="#1F2631"
+             
+             Icon="dds.png"
+             Title="Detail">
+
+  <ContentPage.Content>
+    <StackLayout Spacing="10" Margin="20,100,0,0">
+
+      <Button x:Name="UserDetails" TextColor="White" Text="Logout" Clicked="OnProfileButtonClicked">
+      </Button>
+            
+            
+      
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

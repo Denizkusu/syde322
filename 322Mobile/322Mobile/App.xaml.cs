@@ -9,10 +9,14 @@ namespace _322Mobile
     public App()
     {
       InitializeComponent();
-      MainPage = new NavigationPage(new StartPage())
+      //MainPage = new _322Mobile.MasterPageNavigation();
+      MainPage = new NavigationPage(new ProductPage("abc"))
       {
         BarBackgroundColor = Color.FromHex("1F2631"),
       };
+
+
+
     }
 
     protected override void OnStart()

@@ -85,6 +85,10 @@ namespace _322Mobile
 
     void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
     {
+      if (error.Text != "") {
+        error.Text = ""; 
+      }
+
       if (password.Text != null && password.Text != ""){
         if (emailCondition == true)
         {
@@ -99,6 +103,12 @@ namespace _322Mobile
 
     void Handle_TextChanged_1(object sender, Xamarin.Forms.TextChangedEventArgs e)
     {
+
+      if (error.Text != "")
+      {
+        error.Text = "";
+      }
+
       if (initialEntry == false)
       {
         validateEmail(); 
@@ -130,18 +140,30 @@ namespace _322Mobile
       {
         var response = await client.PostAsync("https://ehl.me/api/login", content);
         var responseString = await response.Content.ReadAsStringAsync();
-        Navigation.InsertPageBefore(new HomePage(), Navigation.NavigationStack[0]);
+        if (!response.IsSuccessStatusCode)
+        {
+          error.Text = "Invalid Credentials";
+          button1.IsEnabled = false; 
+        }
+        else
+        {
 
-        try
-        {
-          await SecureStorage.SetAsync("oauth_token", responseString);
+          try
+          {
+            await SecureStorage.SetAsync("oauth_token", responseString);
+          }
+          catch (Exception ex)
+          {
+            // Possible that device doesn't support secure storage on device.
+            // enable secure storage
+          }
+
+          Navigation.InsertPageBefore(new MasterPageNavigation(), Navigation.NavigationStack[0]);
+          await Navigation.PopToRootAsync();
+
+          //await Navigation.PushAsync(new HomePage());
         }
-        catch (Exception ex)
-        {
-          // Possible that device doesn't support secure storage on device.
-          // enable secure storage
-        }
-        await Navigation.PopToRootAsync();
+
 
 
       }
@@ -157,8 +179,6 @@ namespace _322Mobile
         {
           error.Text = ex.Message;
         }
-
-        await Navigation.PushAsync(new HomePage());
 
       }
     }
