@@ -32,6 +32,8 @@ namespace _322Mobile
       //  </ Label >
       //</ StackLayout >
 
+      string [] categories =  { "abc", "def", "ghi"};
+
 
 
       //StackLayout categoryContainer = new StackLayout { Spacing=10, 
@@ -44,18 +46,92 @@ namespace _322Mobile
 
       Image img = new Image { Source = "xr.png", HeightRequest = 200, HorizontalOptions=LayoutOptions.Center};
 
-      StackLayout a1 = new StackLayout { };
-      Label catName = new Label
-      {
-        Text = "cat1",
-        TextColor = Color.FromHex("#fff"),
-        FontSize = 25,
-        HorizontalOptions = LayoutOptions.Start
-      };
+      reviewStack.Children.Add(prodName);
+      reviewStack.Children.Add(img);
 
-      StackLayout a1Reviews = new StackLayout { Orientation = StackOrientation.Vertical };
 
-      a1.Children.Add(catName);
+      foreach (string x in categories) {
+        //var catContainer = new StackLayout { Margin = new Thickness(20, 20, 20, 0) };
+        var catContainer = new Grid { Margin = new Thickness(20, 0, 20, 0), HorizontalOptions = LayoutOptions.FillAndExpand};
+
+        catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+        catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+        catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+        Label catName = new Label
+        {
+          Text = x,
+          TextColor = Color.FromHex("#fff"),
+          FontSize = 25,
+          HorizontalOptions = LayoutOptions.Start
+        };
+
+        var tapGestureRecognizer = new TapGestureRecognizer();
+        tapGestureRecognizer.Tapped += (s, e) => {
+          DisplayAlert("yeet", "yeet", "yeet"); 
+
+        };
+
+
+        Label catDown = new Label
+        {
+          Text = "V",
+          TextColor = Color.FromHex("#fff"),
+          FontSize = 25,
+          HorizontalOptions = LayoutOptions.End
+        };
+
+        BoxView box = new BoxView {BackgroundColor=Color.Transparent }; 
+
+        box.GestureRecognizers.Add(tapGestureRecognizer); 
+
+        catContainer.Children.Add(catName, 0,0);
+        catContainer.Children.Add(catDown, 1, 0);
+        catContainer.Children.Add(box, 0, 0);
+
+        var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal, HorizontalScrollBarVisibility=ScrollBarVisibility.Never};
+        catContainer.Children.Add(reviewScroll, 0,1);
+        Grid.SetColumnSpan(reviewScroll, 2);
+        Grid.SetColumnSpan(box, 2);
+
+        StackLayout a1Review = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 20 };
+        for (int i = 0; i < 10; i++)
+        {
+          Label reviewText = new Label { WidthRequest = 200, TextColor = Color.White, Margin=0 }; 
+          reviewText.Text = "loremiheig wiufh eiuh gfiuehiugrh eiuhrgiueh iughieu hfiuahf iuwhfuiwhfiuwh ienfriunuiueufh ju rfjurh urhf uuf iurhiueuh fuiheurh ufhiueh rfiuheufiheiuh iurf iueuhriufheiurufhuehu uhr urhf uhruf hrfuh fiuhwiefjiojijij iejf iej fijfiej fjij ie fi fjiej fij foiejwoiej fwiuh giwehiehrgiuehiugheiurgh iure ";  
+
+          a1Review.Children.Add(reviewText);
+        }
+
+        reviewScroll.Content = a1Review;
+        if (x != "abc")
+
+        { 
+        reviewScroll.IsVisible = false; 
+        }
+
+
+
+
+        reviewStack.Children.Add(catContainer);
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+      //a1.Children.Add(catName);
+      //StackLayout a1Reviews = new StackLayout();
+      //a1.Children.Add(a1Reviews);
+
 
       //for (int i =0; i<20; i++) {
       //  Label cz = new Label
@@ -71,12 +147,9 @@ namespace _322Mobile
 
       //}
 
-      for (int i = 0; i < 100; i++)
-      {
-        a1Reviews.Children.Add(new Button { Text = "Button " + i });
-      }
 
-      ScrollView cat1scroll = new ScrollView {  Content = a1Reviews };
+
+       
 
 
 
@@ -84,15 +157,14 @@ namespace _322Mobile
 
 
 
-      //a1.Children.Add(a1Reviews);
 
-      reviewStack.Children.Add(a1Reviews);
+
+     
       //a1.
 
 
-      reviewStack.Children.Add(prodName);
-      reviewStack.Children.Add(img);
-      reviewStack.Children.Add(a1); 
+
+
       
 
 
@@ -105,7 +177,7 @@ namespace _322Mobile
     async void OnSearchCompletedAsync(object sender, System.EventArgs e)
     {
 
-      reviewStack.IsVisible = false;
+      //reviewStack.IsVisible = false;
       //DisplayAlert("Alert", "You have been alerted", "OK");
 
       //(temp).Text = username.Text + password.Text+email.Text;
