@@ -67,22 +67,30 @@ namespace _322Mobile
           HorizontalOptions = LayoutOptions.Start
         };
 
-        var tapGestureRecognizer = new TapGestureRecognizer();
-        tapGestureRecognizer.Tapped += (s, e) => {
-          DisplayAlert("yeet", "yeet", "yeet"); 
 
-        };
-
+        var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal, HorizontalScrollBarVisibility = ScrollBarVisibility.Never };
 
         Label catDown = new Label
         {
-          Text = "V",
+          Text = "▼",
           TextColor = Color.FromHex("#fff"),
           FontSize = 25,
           HorizontalOptions = LayoutOptions.End
         };
 
-        BoxView box = new BoxView {BackgroundColor=Color.Transparent }; 
+        var tapGestureRecognizer = new TapGestureRecognizer();
+        tapGestureRecognizer.Tapped += (s, e) => {
+
+          if (reviewScroll.IsVisible)
+          {
+            reviewScroll.IsVisible = false;
+          }
+          else { reviewScroll.IsVisible = true; }
+
+
+        };
+
+        BoxView box = new BoxView {BackgroundColor=Color.Transparent, ClassId= x}; 
 
         box.GestureRecognizers.Add(tapGestureRecognizer); 
 
@@ -90,7 +98,7 @@ namespace _322Mobile
         catContainer.Children.Add(catDown, 1, 0);
         catContainer.Children.Add(box, 0, 0);
 
-        var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal, HorizontalScrollBarVisibility=ScrollBarVisibility.Never};
+
         catContainer.Children.Add(reviewScroll, 0,1);
         Grid.SetColumnSpan(reviewScroll, 2);
         Grid.SetColumnSpan(box, 2);
