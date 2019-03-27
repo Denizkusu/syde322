@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Net.Http;
 using System.Net;
 using System.Web;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using _322Mobile.Models;
@@ -13,10 +14,12 @@ namespace _322Mobile
 {
   public partial class SearchResultsPage : ContentPage
   {
-    private static string[] phoneArray;
-    private static string[] phonePriceArray;
-    private static string[] phoneScoreArray;
-    private static string[] pidar;
+    //private static string[] phoneArray;
+    //private static string[] phonePriceArray;
+    //private static string[] phoneScoreArray;
+    //private static string[] pidar;
+    public string SearchString { get; set; }
+    private static Phone[] _phones;
     private static HttpClient client;
 
     public SearchResultsPage(string searchString)
@@ -25,15 +28,27 @@ namespace _322Mobile
       client = new HttpClient();
       client.DefaultRequestHeaders.Authorization =
           new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", App.Token);
-      makePostRequest(searchString);
+      SearchString = searchString;
+    }
 
+    protected override async void OnAppearing()
+    {
+      _phones = await SearchPhones();
+      generateElements();
     }
 
 
-    private async void makePostRequest(string searchString)
+    private async Task<Phone[]> SearchPhones()
     {
-      searchString = Uri.EscapeUriString(searchString);
-      string HttpGetUrl = String.Format("https://ehl.me/api/phone?phoneName={0}", searchString);
+      if (SearchString != "")
+      {
+        SearchString = Uri.EscapeUriString(SearchString);
+      }
+      else
+      {
+        return null;
+      }
+      string HttpGetUrl = String.Format("https://ehl.me/api/phone?phoneName={0}", SearchString);
       try
       {
         var response = await client.GetAsync(HttpGetUrl);
@@ -47,10 +62,11 @@ namespace _322Mobile
         if (!response.IsSuccessStatusCode)
         {
           //error.Text = "Invalid Credentials";
+          throw new Exception("Bad request");
         }
         else
         {
-          Console.WriteLine("Party!");
+          return phones;
         }
       }
       catch (WebException ex)
@@ -65,6 +81,7 @@ namespace _322Mobile
         {
           //error.Text = ex.Message;
         }
+        return null;
       }
 
 
@@ -72,74 +89,73 @@ namespace _322Mobile
       //var numOfResults = 3;
       //phoneArray = new string[numOfResults]; 
 
-      phoneArray = new string[] { "abcd", "efgh", "ijkl", "hijk", "lmno" };
-      phonePriceArray = new string[] { "12.2", "18.8", "92.4", "21.9", "18.3" };
-      phoneScoreArray = new string[] { "3", "4", "9", "2.2", "90" };
-      pidar = new string[] { "a3", "s4", "d9", "f2.2", "g90" };
+      //phoneArray = new string[] { "abcd", "efgh", "ijkl", "hijk", "lmno" };
+      //phonePriceArray = new string[] { "12.2", "18.8", "92.4", "21.9", "18.3" };
+      //phoneScoreArray = new string[] { "3", "4", "9", "2.2", "90" };
+      //pidar = new string[] { "a3", "s4", "d9", "f2.2", "g90" };
 
-      generateElements();
 
     }
 
     void generateElements()
     {
-      if (phoneArray.Length == 0)
-      {
+      //if (phoneArray.Length == 0)
+      //{
 
 
-      }
-      else
-      {
-        for (int i = 0; i < phoneArray.Length; i++)
-        {
-          StackLayout contentData = new StackLayout
-          {
-            BackgroundColor = Color.FromHex("#00aced"),
-            Padding = new Thickness(10, 10, 10, 10),
-            HeightRequest = 150
+      //}
+      //else
+      //{
+      //  for (int i = 0; i < phoneArray.Length; i++)
+      //  {
+      //    StackLayout contentData = new StackLayout
+      //    {
+      //      BackgroundColor = Color.FromHex("#00aced"),
+      //      Padding = new Thickness(10, 10, 10, 10),
+      //      HeightRequest = 150
 
-          };
-
-
-
-          contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 20, Text = phoneArray[i] });
-          contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Overall Score: " + phoneScoreArray[i] });
-          contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + phonePriceArray[i] });
-          //Image imageData = new Image
-          //{
-          //  Source = ImageSource.FromUri(new Uri("https://xamarin.com/content/images/pages/forms/example-app.png"))
-          //};
-          Image imageData = new Image { Source = "xr.png", HeightRequest = 150 };
-
-          imageData.ClassId = pidar[i];
-          contentData.ClassId = pidar[i];
-
-          var tapGestureRecognizer = new TapGestureRecognizer();
-          tapGestureRecognizer.Tapped += (s, e) =>
-          {
-            var parm = ((Image)s).ClassId;
-            Navigation.PushAsync(new ProductPage(parm));
-          };
-
-          var tapGestureRecognizer2 = new TapGestureRecognizer();
-          tapGestureRecognizer2.Tapped += (zo, ed) =>
-          {
-            var parm = ((StackLayout)zo).ClassId;
-            Navigation.PushAsync(new ProductPage(parm));
-          };
-
-          contentData.GestureRecognizers.Add(tapGestureRecognizer2);
-          imageData.GestureRecognizers.Add(tapGestureRecognizer);
-
-          grid.Children.Add(contentData, 0 + (i % 2), i);
-          grid.Children.Add(imageData, 1 - (i % 2), i);
-        }
+      //    };
 
 
 
+      //    contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 20, Text = phoneArray[i] });
+      //    contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Overall Score: " + phoneScoreArray[i] });
+      //    contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + phonePriceArray[i] });
+      //    //Image imageData = new Image
+      //    //{
+      //    //  Source = ImageSource.FromUri(new Uri("https://xamarin.com/content/images/pages/forms/example-app.png"))
+      //    //};
+      //    Image imageData = new Image { Source = "xr.png", HeightRequest = 150 };
+
+      //    imageData.ClassId = pidar[i];
+      //    contentData.ClassId = pidar[i];
+
+      //    var tapGestureRecognizer = new TapGestureRecognizer();
+      //    tapGestureRecognizer.Tapped += (s, e) =>
+      //    {
+      //      var parm = ((Image)s).ClassId;
+      //      Navigation.PushAsync(new ProductPage(parm));
+      //    };
+
+      //    var tapGestureRecognizer2 = new TapGestureRecognizer();
+      //    tapGestureRecognizer2.Tapped += (zo, ed) =>
+      //    {
+      //      var parm = ((StackLayout)zo).ClassId;
+      //      Navigation.PushAsync(new ProductPage(parm));
+      //    };
+
+      //    contentData.GestureRecognizers.Add(tapGestureRecognizer2);
+      //    imageData.GestureRecognizers.Add(tapGestureRecognizer);
+
+      //    grid.Children.Add(contentData, 0 + (i % 2), i);
+      //    grid.Children.Add(imageData, 1 - (i % 2), i);
+      //  }
 
 
-      }
+
+
+
+      //}
 
 
 
