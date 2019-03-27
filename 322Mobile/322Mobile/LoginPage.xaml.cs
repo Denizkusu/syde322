@@ -10,19 +10,18 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
 
-
 namespace _322Mobile
 {
   public partial class LoginPage : ContentPage
   {
     private static HttpClient client;
     private static bool emailCondition;
-    private static bool initialEntry; 
+    private static bool initialEntry;
     public LoginPage()
     {
       client = new HttpClient();
       emailCondition = false;
-      initialEntry = true;  
+      initialEntry = true;
       BackgroundColor.Equals("#FFF");
       InitializeComponent();
 
@@ -31,7 +30,7 @@ namespace _322Mobile
     void Handle_Unfocused_Email(object sender, Xamarin.Forms.FocusEventArgs e)
     {
       validateEmail();
-      initialEntry = false; 
+      initialEntry = false;
     }
 
     void validateEmail()
@@ -49,7 +48,7 @@ namespace _322Mobile
       else
       {
         emailValidation.Text = "";
-        emailCondition = true; 
+        emailCondition = true;
         if (password.Text != null && password.Text != "")
         {
           button1.IsEnabled = true;
@@ -85,19 +84,21 @@ namespace _322Mobile
 
     void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
     {
-      if (error.Text != "") {
-        error.Text = ""; 
+      if (error.Text != "")
+      {
+        error.Text = "";
       }
 
-      if (password.Text != null && password.Text != ""){
+      if (password.Text != null && password.Text != "")
+      {
         if (emailCondition == true)
         {
-          button1.IsEnabled = true; 
+          button1.IsEnabled = true;
         }
       }
       else
       {
-        button1.IsEnabled = false;  
+        button1.IsEnabled = false;
       }
     }
 
@@ -111,20 +112,20 @@ namespace _322Mobile
 
       if (initialEntry == false)
       {
-        validateEmail(); 
+        validateEmail();
 
       }
       else
       {
-        validateEmailSoft(); 
+        validateEmailSoft();
       }
     }
 
     async void OnLoginButtonClicked(object sender, System.EventArgs e)
     {
 
-      
-      
+
+
       error.Text = "";
       var values = new Dictionary<string, string>
             {
@@ -143,23 +144,25 @@ namespace _322Mobile
         if (!response.IsSuccessStatusCode)
         {
           error.Text = "Invalid Credentials";
-          button1.IsEnabled = false; 
+          button1.IsEnabled = false;
         }
         else
         {
+          App.Token = responseString;
 
-          try
-          {
-            await SecureStorage.SetAsync("oauth_token", responseString);
-          }
-          catch (Exception ex)
-          {
-            // Possible that device doesn't support secure storage on device.
-            // enable secure storage
-          }
+          //if (Navigation.NavigationStack.Count() == 0)
+          //{
+          //  await Navigation.PushModalAsync(new MasterPageNavigation());
+          //}
+          //else
+          //{
+          //  Navigation.InsertPageBefore(new MasterPageNavigation(), Navigation.NavigationStack[0]);
+          //}
+          //MainPage = new NavigationPage(new MainPage());
+          //var test = new NavigationPage(new MasterPageNavigation());
+          Application.Current.MainPage = new NavigationPage(new MasterPageNavigation());
 
-          Navigation.InsertPageBefore(new MasterPageNavigation(), Navigation.NavigationStack[0]);
-          await Navigation.PopToRootAsync();
+          //await Navigation.PopToRootAsync();
 
           //await Navigation.PushAsync(new HomePage());
         }
