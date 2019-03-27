@@ -25,6 +25,7 @@ namespace _322Mobile
     {
       //DisplayAlert("Alert", "You have been alerted", "OK");
 
+
       await Navigation.PushAsync(new SearchResultsPage(searchText.Text));
       searchText.Text = string.Empty;
 
