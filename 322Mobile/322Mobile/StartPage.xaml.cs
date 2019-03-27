@@ -19,12 +19,12 @@ namespace _322Mobile
 
     async void OnLoginButtonClicked(object sender, System.EventArgs e)
     {
-      await Navigation.PushAsync(new LoginPage());
+      await Navigation.PushModalAsync(new LoginPage());
     }
 
     async void OnRegisterButtonClicked(object sender, System.EventArgs e)
     {
-      await Navigation.PushAsync(new RegisterPage());
+      await Navigation.PushModalAsync(new RegisterPage());
     }
 
   }

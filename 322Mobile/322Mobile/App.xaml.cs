@@ -1,20 +1,22 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+//[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace _322Mobile
 {
   public partial class App : Application
   {
+    public static string Token { get; set; }
+
     public App()
     {
       InitializeComponent();
       //MainPage = new _322Mobile.MasterPageNavigation();
-      MainPage = new NavigationPage(new ProductPage("abc"))
+      //MainPage = new NavigationPage(new ProductPage("abc"))
+      MainPage = new LoginPage()
       {
-        BarBackgroundColor = Color.FromHex("1F2631"),
+        //  //BarBackgroundColor = Color.FromHex("1F2631")
       };
-
 
 
     }
