@@ -50,7 +50,8 @@ namespace _322Mobile
         Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest = 100 };
 
         reviewStack.Children.Add(loader);
-        await loader.RotateTo(360, 500);
+        await loader.RotateTo(360, 200);
+        loader.RotateTo(1800, 1000);
         var response = await client.GetAsync(HttpGetUrl);
         loader.IsVisible = false;
 

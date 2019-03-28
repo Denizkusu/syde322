@@ -34,11 +34,13 @@ namespace _322Mobile
     {
       _phones = await SearchPhones();
       generateElements();
+      searchText.Text = null; 
     }
 
 
     private async Task<Phone[]> SearchPhones()
     {
+      Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest = 100 };
       if (SearchString != "")
       {
         SearchString = Uri.EscapeUriString(SearchString);
@@ -50,11 +52,12 @@ namespace _322Mobile
       string HttpGetUrl = String.Format("https://ehl.me/api/phone?phoneName={0}", SearchString);
       try
       {
-        Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest=100};
+
 
         grid.Children.Add(loader, 0,1);
         Grid.SetColumnSpan(loader, 2);
-        await loader.RotateTo(360, 500); 
+        await loader.RotateTo(360, 200);
+        loader.RotateTo(1800, 1000);
         var response = await client.GetAsync(HttpGetUrl);
         loader.IsVisible = false; 
 
@@ -80,7 +83,10 @@ namespace _322Mobile
       }
       catch (WebException ex)
       {
-
+        grid.Children.Add(loader, 0, 1);
+        Grid.SetColumnSpan(loader, 2);
+        await loader.RotateTo(360, 200);
+        loader.IsVisible = false; 
         if (ex.Response is HttpWebResponse)
         {
           var httpResponse = ex.Response as HttpWebResponse;
@@ -89,7 +95,7 @@ namespace _322Mobile
         else
         {
 
-          Label noResultsText = new Label { Text = "Malformed Response Error. Please try again." , TextColor = Color.White };
+          Label noResultsText = new Label { Text = ex.Message , TextColor = Color.White };
           grid.Children.Add(noResultsText, 0, 0);
           Grid.SetColumnSpan(noResultsText, 2);
           return null; 
@@ -109,7 +115,7 @@ namespace _322Mobile
         {
 
           //No results
-          Label noResultsText = new Label { Text = "No Results Found", TextColor = Color.White };
+          Label noResultsText = new Label { Text = String.Format("No Results Found for: {0}", SearchString), TextColor = Color.White };
           grid.Children.Add(noResultsText, 0, 0);
           Grid.SetColumnSpan(noResultsText, 2);
         }
@@ -158,10 +164,16 @@ namespace _322Mobile
 
 
 
-    async void OnSearchCompletedAsync(object sender, System.EventArgs e)
+    void OnSearchCompletedAsync(object sender, System.EventArgs e)
     {
-      await Navigation.PushAsync(new SearchResultsPage(searchText.Text));
-      Navigation.RemovePage(Navigation.NavigationStack[1]);
+      grid.Children.Clear();
+      SearchString = searchText.Text; 
+      initialLoad(); 
+
+
+      //await Navigation.PushAsync(new SearchResultsPage(searchText.Text));
+      //Navigation.RemovePage(Navigation.NavigationStack[1]);
+
 
     }
 

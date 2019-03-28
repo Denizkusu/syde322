@@ -101,7 +101,7 @@ namespace _322Mobile
       Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
       RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      if ((!rx.IsMatch(email.Text) && email.Text != "") || email.Text == null || email.Text == "")
+      if (email.Text == null || (!rx.IsMatch(email.Text) && email.Text != "") ||  email.Text == "")
       {
         emailCondition = false;
         button1.IsEnabled = false;
@@ -126,7 +126,7 @@ namespace _322Mobile
       Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
       RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      if ((!rx.IsMatch(email.Text) && email.Text != "") || email.Text == null || email.Text == "")
+      if (email.Text == null || (!rx.IsMatch(email.Text) && email.Text != "") ||  email.Text == "")
       {
         emailCondition = false;
         button1.IsEnabled = false;
@@ -156,15 +156,15 @@ namespace _322Mobile
       //min 8 char max 24, 1 special character, 1 number, 1 upper and 1 lowercase
       Regex rx = new Regex(@"(?=^.{8,24}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      if (!rx.IsMatch(password.Text) && password.Text != "")
+      if (password.Text == null || (!rx.IsMatch(password.Text) && password.Text != "") || password.Text == "")
       {
-        passwordValidation.Text = "Your password must be between 8-24 characters and contain 1 number, 1 special character and 1 upper and lower case letter";
-        validPassCondition = false; 
+        validPassCondition = true;
+        passwordValidation.Text = "";
       }
       else
       {
-        validPassCondition = true; 
-        passwordValidation.Text = "";
+        passwordValidation.Text = "Your password must be between 8-24 characters and contain 1 number, 1 special character and 1 upper and lower case letter";
+        validPassCondition = false;
       }
     }
 
