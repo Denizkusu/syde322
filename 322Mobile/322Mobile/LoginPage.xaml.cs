@@ -126,7 +126,7 @@ namespace _322Mobile
     async void OnLoginButtonClicked(object sender, System.EventArgs e)
     {
 
-
+      Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest = 100 };
 
       error.Text = "";
       var values = new Dictionary<string, string>
@@ -141,8 +141,13 @@ namespace _322Mobile
 
       try
       {
+        stackLayout.Children.Add(loader);
+        await loader.RotateTo(360, 200);
+        loader.RotateTo(18000, 10000);
+
         var response = await client.PostAsync("https://ehl.me/api/login", content);
         var responseString = await response.Content.ReadAsStringAsync();
+        loader.IsVisible = false; 
         if (!response.IsSuccessStatusCode)
         {
           error.Text = "Invalid Credentials";
@@ -166,7 +171,9 @@ namespace _322Mobile
       }
       catch (WebException ex)
       {
-
+        stackLayout.Children.Add(loader);
+        await loader.RotateTo(360, 200);
+        loader.IsVisible = false;
         if (ex.Response is HttpWebResponse)
         {
           var httpResponse = ex.Response as HttpWebResponse;

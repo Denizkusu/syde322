@@ -138,11 +138,16 @@ namespace _322Mobile
           Label price0 = new Label { Text = "Price:", TextColor = Color.FromHex("#fff"), FontSize = 15 };
           Label price = new Label { Text = String.Format("${0}",phoneIds.Price ), TextColor = Color.FromHex("#fff"), FontSize = 15 };
 
-          detailsLayoutContainer.Children.Add(score0);
-          detailsLayoutContainer.Children.Add(score);
-          detailsLayoutContainer.Children.Add(price0);
+          if (phoneIds.Score != (decimal)0.0)
+          {
+            detailsLayoutContainer.Children.Add(score0);
+            detailsLayoutContainer.Children.Add(score);
+          }
+          if (phoneIds.Price != (decimal)0.0)
+          {
+            detailsLayoutContainer.Children.Add(price0);
           detailsLayoutContainer.Children.Add(price);
-
+          }
           detailsContainer.Children.Add(img, 0, 0);
           detailsContainer.Children.Add(detailsLayoutContainer, 1, 0);
 

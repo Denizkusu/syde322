@@ -136,9 +136,13 @@ namespace _322Mobile
 
 
             contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 20, Text = _phones[i].Name.ToUpper() });
+            if (_phones[i].Score != (decimal) 0.0) { 
             contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Overall Score: " + _phones[i].Score });
-            contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + _phones[i].Price });
-
+            }
+            if (_phones[i].Price != (decimal)0.0)
+            {
+              contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + _phones[i].Price });
+            }
             Image imageData = new Image
             { HeightRequest = 150 };
             if (_phones[i].ImageUrl == null) {
