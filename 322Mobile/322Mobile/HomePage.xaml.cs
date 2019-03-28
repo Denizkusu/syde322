@@ -25,15 +25,69 @@ namespace _322Mobile
       InitializeComponent();
     }
 
-    protected virtual async void OnAppearing()
+    protected override async void  OnAppearing()
     {
       User user = await GetUser();
       if (!(user is null))
       {
         this.User = user;
+        generateElements(); 
+
       }
 
+
+
       //TODO: dynamically make elements for each string in history and have them link to search results page 
+
+
+    }
+
+    void generateElements()
+    {
+      if (User.History != null)
+      {
+        if (User.History.Length == 0)
+        {
+
+          //No results
+          Label noResultsText = new Label { Text = "No History Yet", TextColor = Color.White };
+          grid.Children.Add(noResultsText, 0, 0);
+          Grid.SetColumnSpan(noResultsText, 2);
+        }
+        else
+        {
+          for (int i = 0; i < User.History.Length; i++)
+          {
+            StackLayout contentData = new StackLayout
+            {
+              BackgroundColor = Color.FromHex("#00aced"),
+              Padding = new Thickness(10, 10, 10, 10),
+              HeightRequest = 50
+
+            };
+
+
+
+            contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 20, Text = User.History[i].ToUpper() });
+            var tempStore = User.History[i]; 
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+              Navigation.PushAsync(new SearchResultsPage(tempStore));
+            };
+
+            contentData.GestureRecognizers.Add(tapGestureRecognizer);
+
+
+            grid.Children.Add(contentData, 0, i);
+
+          }
+
+        }
+
+
+      }
     }
 
     void OnProfileButtonClicked(object sender, System.EventArgs e)

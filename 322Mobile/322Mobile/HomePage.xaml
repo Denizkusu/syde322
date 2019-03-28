@@ -1,57 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="using:_322Mobile"
-             x:Class="_322Mobile.HomePage" 
-
-             NavigationPage.HasBackButton="False" BackgroundColor="#1F2631" 
-             Title="Home" Icon="dds.png">
- 
-    
-    <!--<ContentPage.ToolbarItems>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="using:_322Mobile" x:Class="_322Mobile.HomePage" NavigationPage.HasBackButton="False" BackgroundColor="#1F2631" Title="Home" Icon="dds.png">
+  <!--<ContentPage.ToolbarItems>
     <ToolbarItem  Clicked="OnProfileButtonClicked" />
   </ContentPage.ToolbarItems>-->
-    
-
-    
   <ContentPage.Content>
-    <StackLayout Spacing="10" Margin="20,20,20,0">
-            <Label TextColor="#ffffff" FontSize="25" Text="Search">
+    <StackLayout x:Name="container" Spacing="10" Margin="20,20,20,0">
+      <Label TextColor="#ffffff" FontSize="25" Text="Search">
       </Label>
       <Entry x:Name="searchText" Placeholder="Search for Phones..." VerticalOptions="Center" IsTextPredictionEnabled="false" Completed="OnSearchCompletedAsync" BackgroundColor="White" />
-      <Label x:Name="emailValidation" TextColor="Red">
+      <Label x:Name="History" TextColor="#ffffff" FontSize="25" Text="Search History">
       </Label>
-      
-            
-            
-      <!--<Grid RowSpacing="20">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Text="Searched Phones" Clicked="OnProfileButtonClicked" Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-          HeightRequest="100">
-        </Button>
-        <ContentView Grid.Row="0" Grid.Column="1" Padding="20,20,20,20" HeightRequest="100">
-          <Label BackgroundColor="#00aced" TextColor="#fff" FontFamily="Helvetica" FontAttributes="Bold">
-            <Label.Text>
-                        Past 
-                        Searches
-                        
-                    </Label.Text>
-          </Label>
-        </ContentView>
-        <Button Grid.Row="1" Grid.Column="0" Text="Submit a Review" Clicked="OnProfileButtonClicked" Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-          HeightRequest="100">
-        </Button>
-        <Button Grid.Row="1" Grid.Column="1" Text="Track Prices" Clicked="OnProfileButtonClicked" Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" FontFamily="Helvetica" FontSize="Large" FontAttributes="Bold"
-          HeightRequest="100">
-        </Button>
-      </Grid>-->
+      <ScrollView>
+        <Grid x:Name="grid" RowSpacing="20">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+        </Grid>
+      </ScrollView>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

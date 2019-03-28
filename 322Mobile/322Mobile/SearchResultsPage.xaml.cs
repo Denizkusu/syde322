@@ -139,7 +139,18 @@ namespace _322Mobile
             contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Overall Score: " + _phones[i].Score });
             contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + _phones[i].Price });
 
-            Image imageData = new Image { Source = "xr.png", HeightRequest = 150 };
+            Image imageData = new Image
+            { HeightRequest = 150 };
+            if (_phones[i].ImageUrl == null) {
+              imageData.Source = "xr.png";
+            }
+            else
+            {
+              imageData.Source = ImageSource.FromUri(new Uri(_phones[i].ImageUrl));
+
+            }
+
+
 
             imageData.ClassId = _phones[i].Id.ToString();
             contentData.ClassId = _phones[i].Id.ToString();

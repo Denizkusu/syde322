@@ -45,9 +45,10 @@ namespace _322Mobile
         return null;
       }
       string HttpGetUrl = String.Format("https://ehl.me/api/review/{0}", phoneIds.Id);
+      Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest = 100 };
       try
       {
-        Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest = 100 };
+
 
         reviewStack.Children.Add(loader);
         await loader.RotateTo(360, 200);
@@ -75,19 +76,24 @@ namespace _322Mobile
       }
       catch (WebException ex)
       {
-
+        reviewStack.Children.Add(loader);
+        await loader.RotateTo(360, 200);
+        loader.IsVisible = false;
         if (ex.Response is HttpWebResponse)
         {
           var httpResponse = ex.Response as HttpWebResponse;
+          //error.Text = httpResponse.StatusDescription;
         }
         else
         {
 
-          Label noResultsText = new Label { Text = "Malformed Response Error. Please try again.", TextColor = Color.White };
+          Label noResultsText = new Label { Text = ex.Message, TextColor = Color.White };
           reviewStack.Children.Add(noResultsText);
           return null;
+          //error.Text = ex.Message;
         }
         return null;
+
       }
     }
 
@@ -107,10 +113,42 @@ namespace _322Mobile
         FontSize = 25, HorizontalOptions=LayoutOptions.Center
       };
 
-      Image img = new Image { Source = "xr.png", HeightRequest = 200, HorizontalOptions=LayoutOptions.Start};
+      var detailsContainer = new Grid { Margin = new Thickness(20, 0, 20, 0), HorizontalOptions = LayoutOptions.FillAndExpand };
+      detailsContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+          detailsContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+          detailsContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+          detailsContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+          detailsContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-      reviewStack.Children.Add(prodName);
-      reviewStack.Children.Add(img);
+          Image img = new Image { HeightRequest = 150, HorizontalOptions = LayoutOptions.Start };
+          if (phoneIds.ImageUrl == null)
+          {
+            img.Source = "xr.png";
+          }
+          else
+          {
+            img.Source = ImageSource.FromUri(new Uri(phoneIds.ImageUrl));
+
+          }
+
+          StackLayout detailsLayoutContainer = new StackLayout {VerticalOptions = LayoutOptions.Center };
+          Label score0 = new Label { Text = "Overall Score:", TextColor = Color.FromHex("#fff"), FontSize = 15 };
+          Label score = new Label{ Text = phoneIds.Score.ToString() ,TextColor = Color.FromHex("#fff"), FontSize = 15 };
+
+          Label price0 = new Label { Text = "Price:", TextColor = Color.FromHex("#fff"), FontSize = 15 };
+          Label price = new Label { Text = String.Format("${0}",phoneIds.Price ), TextColor = Color.FromHex("#fff"), FontSize = 15 };
+
+          detailsLayoutContainer.Children.Add(score0);
+          detailsLayoutContainer.Children.Add(score);
+          detailsLayoutContainer.Children.Add(price0);
+          detailsLayoutContainer.Children.Add(price);
+
+          detailsContainer.Children.Add(img, 0, 0);
+          detailsContainer.Children.Add(detailsLayoutContainer, 1, 0);
+
+
+          reviewStack.Children.Add(prodName);
+      reviewStack.Children.Add(detailsContainer);
 
           var reviewCategories = new Dictionary<string, List<PhoneReview>>();
 

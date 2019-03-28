@@ -10,8 +10,8 @@
       <Image Source="dds.png" HeightRequest="150" Margin="0,0,0,20"></Image>
       <Label x:Name="useremail" Margin="0,0,0,20" Text="" TextColor="White" HorizontalOptions="Center"/> 
                 
-      <Button x:Name="PhonesSearched" TextColor="Black" Text="Phones Searched" Clicked="OnPhonesButtonClicked" BackgroundColor="White">
-      </Button>
+<!--      <Button x:Name="PhonesSearched" TextColor="Black" Text="Phones Searched" Clicked="OnPhonesButtonClicked" BackgroundColor="White">-->
+<!--      </Button>-->
             <Button x:Name="UserDetails" TextColor="Black" Text="Logout" Clicked="OnProfileButtonClicked" BackgroundColor="White">
       </Button>
             
