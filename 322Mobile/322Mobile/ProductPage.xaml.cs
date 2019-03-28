@@ -51,7 +51,7 @@ namespace _322Mobile
 
         reviewStack.Children.Add(loader);
         await loader.RotateTo(360, 200);
-        loader.RotateTo(1800, 1000);
+        loader.RotateTo(18000, 10000);
         var response = await client.GetAsync(HttpGetUrl);
         loader.IsVisible = false;
 
@@ -113,6 +113,10 @@ namespace _322Mobile
       reviewStack.Children.Add(img);
 
           var reviewCategories = new Dictionary<string, List<PhoneReview>>();
+
+          Random rnd = new Random();
+          var temp = _reviews; 
+          _reviews = temp.OrderBy(x => rnd.Next()).ToArray();
 
           foreach (PhoneReview z in _reviews)
           {
@@ -211,7 +215,27 @@ namespace _322Mobile
 
               reviewText.Text = actualText;
               //a1Review.Children.Add(reviewBox); 
-              Image reviewSourceLogo = new Image { Source = "theverge.png", HeightRequest = 50 , VerticalOptions=LayoutOptions.EndAndExpand};
+              Image reviewSourceLogo = new Image { HeightRequest = 50, VerticalOptions = LayoutOptions.EndAndExpand };
+              switch (reviewTextItem.SourceName)
+              {
+                case "TheVerge":
+                  reviewSourceLogo.Source = "theverge.png"; 
+                  break;
+                case "TechRadar":
+                  reviewSourceLogo.Source = "techradar.png";
+                  break;
+                case "Cnet":
+                  reviewSourceLogo.Source = "cnet.png";
+                  break;
+
+                default:
+
+                  break;
+              }
+
+
+
+
               reviewItemStackSub.Children.Add(reviewText);
               reviewItemStackSub.Children.Add(reviewSourceLogo);
 

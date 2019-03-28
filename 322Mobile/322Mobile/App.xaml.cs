@@ -18,9 +18,7 @@ namespace _322Mobile
 
     protected override void OnStart()
     {
-      // Handle when your app starts
 
-      //MainPage = new NavigationPage(new MainPage("abc"))
       if (Application.Current.Properties.ContainsKey("oauth-token") && Application.Current.Properties["oauth-token"] != null) {
         MainPage = new _322Mobile.MasterPageNavigation();
       }

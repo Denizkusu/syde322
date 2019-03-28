@@ -10,21 +10,24 @@
                 Placeholder="Email"
                 HeightRequest="50" 
                 Unfocused="Handle_Unfocused_Email"
-                TextChanged="Handle_TextChanged"/>
+                TextChanged="Handle_TextChanged"
+                   BackgroundColor="White"/>
             <Label x:Name="emailValidation" TextColor="Red"></Label>
             <Entry x:Name="password"
                 Placeholder="Password"
                 HeightRequest="50" 
                 Unfocused="Handle_Unfocused_Password"
                 IsPassword="true"
-                TextChanged="Handle_TextChanged_1"/>
+                TextChanged="Handle_TextChanged_1"
+                   BackgroundColor="White"/>
             <Label x:Name="passwordValidation" TextColor="Red"></Label>
             <Entry x:Name="passwordConfirm"
                 Placeholder="Confirm Password"
                 HeightRequest="50" 
                 Unfocused="Handle_Unfocused_Password_Confirmation"
                 IsPassword="true"
-                TextChanged="Handle_TextChanged_2"/>
+                TextChanged="Handle_TextChanged_2"
+                   BackgroundColor="White"/>
             <Label x:Name="passwordConfirmationValidation" TextColor="Red"></Label>
             <Button x:Name="button1" Text="Register" Clicked="OnRegisterButtonClicked" 
                             Margin="0,20" BackgroundColor="#00aced" TextColor="#fff" 

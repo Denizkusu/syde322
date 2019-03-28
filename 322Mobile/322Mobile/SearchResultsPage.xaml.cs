@@ -59,7 +59,7 @@ namespace _322Mobile
         grid.Children.Add(loader, 0,1);
         Grid.SetColumnSpan(loader, 2);
         await loader.RotateTo(360, 200);
-        loader.RotateTo(1800, 1000);
+        loader.RotateTo(18000, 10000);
         var response = await client.GetAsync(HttpGetUrl);
         loader.IsVisible = false; 
 

@@ -12,7 +12,8 @@
                 Margin="10,5"
                 Unfocused="Handle_Unfocused_Email"
                 
-                TextChanged="Handle_TextChanged_1"/>
+                TextChanged="Handle_TextChanged_1"
+                BackgroundColor="White"/>
             <Label x:Name="emailValidation" TextColor="Red"></Label>
 
           <Entry x:Name="password"
@@ -20,7 +21,8 @@
                 HeightRequest="45" 
                 Margin="10,5"
                 IsPassword="true"
-                TextChanged="Handle_TextChanged"/>
+                TextChanged="Handle_TextChanged"
+                 BackgroundColor="White"/>
         
         <Button x:Name="button1" Text="Login" Clicked="OnLoginButtonClicked" 
                 Margin="10,20" BackgroundColor="#00aced" TextColor="#fff" 

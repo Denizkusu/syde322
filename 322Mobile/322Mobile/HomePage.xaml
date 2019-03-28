@@ -18,7 +18,7 @@
     <StackLayout Spacing="10" Margin="20,20,20,0">
             <Label TextColor="#ffffff" FontSize="25" Text="Search">
       </Label>
-      <Entry x:Name="searchText" Placeholder="Search for Phones..." VerticalOptions="Center" IsTextPredictionEnabled="false" Completed="OnSearchCompletedAsync" />
+      <Entry x:Name="searchText" Placeholder="Search for Phones..." VerticalOptions="Center" IsTextPredictionEnabled="false" Completed="OnSearchCompletedAsync" BackgroundColor="White" />
       <Label x:Name="emailValidation" TextColor="Red">
       </Label>
       

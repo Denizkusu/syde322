@@ -11,8 +11,6 @@ namespace _322Mobile
   {
     public StartPage()
     {
-      //NavigationPage.SetHasNavigationBar(this, false);
-      //BackgroundColor.Equals("#FFF");
       InitializeComponent();
 
     }
@@ -20,13 +18,19 @@ namespace _322Mobile
     async void OnLoginButtonClicked(object sender, System.EventArgs e)
     {
 
-      await Navigation.PushAsync(new LoginPage());
+      await Navigation.PushAsync(new NavigationPage(new LoginPage())
+      {
+        BarBackgroundColor = Color.FromHex("1F2631")
+      });
 
     }
 
     async void OnRegisterButtonClicked(object sender, System.EventArgs e)
     {
-      await Navigation.PushAsync(new RegisterPage());
+      await Navigation.PushAsync(new NavigationPage(new RegisterPage())
+      {
+        BarBackgroundColor = Color.FromHex("1F2631")
+      });
     }
 
   }

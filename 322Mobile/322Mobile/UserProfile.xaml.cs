@@ -34,12 +34,21 @@ namespace _322Mobile
       Application.Current.Properties["oauth-token"] = null;
       await Application.Current.SavePropertiesAsync(); 
 
-      //await Navigation.PushAsync(new StartPage());
 
-      //foreach (Page nav in Navigation.NavigationStack)
-      //{
-      //  Navigation.RemovePage(nav);
-      //}
+    }
+
+    async void OnPhonesButtonClicked(object sender, System.EventArgs e)
+    {
+      Application.Current.MainPage = new NavigationPage(new StartPage())
+      {
+        BarBackgroundColor = Color.FromHex("1F2631")
+      };
+
+      await Navigation.PopToRootAsync();
+      Application.Current.Properties["useremail"] = null;
+      Application.Current.Properties["oauth-token"] = null;
+      await Application.Current.SavePropertiesAsync();
+
 
     }
 
