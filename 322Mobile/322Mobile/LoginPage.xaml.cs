@@ -151,6 +151,7 @@ namespace _322Mobile
         else
         {
           //App.Token = responseString;
+          Application.Current.Properties["useremail"] = email.Text;
           Application.Current.Properties["oauth-token"] = responseString;
           await Application.Current.SavePropertiesAsync(); 
 

@@ -1,13 +1,12 @@
 ﻿using System;
+public enum Roles { User, Admin };
 namespace _322Mobile.Models
 {
-  public class Phone
+  public class User
   {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public decimal Score { get; set; }
-    public string ImageUrl { get; set; }
-    public decimal Price { get; set; }
-    public string[] Providers { get; set; }
+    public Roles Name { get; set; }
+    public string Username { get; set; }
+    public string[] History { get; set; }
   }
 }

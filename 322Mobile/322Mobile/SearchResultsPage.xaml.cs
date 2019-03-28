@@ -16,6 +16,7 @@ namespace _322Mobile
   {
 
     public string SearchString { get; set; }
+    public string SearchStringDisplay; 
     private static Phone[] _phones;
     private static HttpClient client;
 
@@ -26,6 +27,7 @@ namespace _322Mobile
       client.DefaultRequestHeaders.Authorization =
           new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Application.Current.Properties["oauth-token"] as string);
       SearchString = searchString;
+      SearchStringDisplay = searchString; 
       initialLoad(); 
 
     }
@@ -115,7 +117,7 @@ namespace _322Mobile
         {
 
           //No results
-          Label noResultsText = new Label { Text = String.Format("No Results Found for: {0}", SearchString), TextColor = Color.White };
+          Label noResultsText = new Label { Text = String.Format("No Results Found for: {0}", SearchStringDisplay), TextColor = Color.White };
           grid.Children.Add(noResultsText, 0, 0);
           Grid.SetColumnSpan(noResultsText, 2);
         }
@@ -167,7 +169,8 @@ namespace _322Mobile
     void OnSearchCompletedAsync(object sender, System.EventArgs e)
     {
       grid.Children.Clear();
-      SearchString = searchText.Text; 
+      SearchString = searchText.Text;
+      SearchStringDisplay = searchText.Text; 
       initialLoad(); 
 
 

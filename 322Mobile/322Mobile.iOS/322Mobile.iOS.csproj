@@ -173,5 +173,8 @@
     <BundleResource Include="Resources\xsmax.png" />
     <BundleResource Include="Resources\xsmax.jp2" />
     <BundleResource Include="Resources\loading.png" />
+    <BundleResource Include="Resources\techradar.png" />
+    <BundleResource Include="Resources\theverge.png" />
+    <BundleResource Include="Resources\cnet.png" />
   </ItemGroup>
 </Project>

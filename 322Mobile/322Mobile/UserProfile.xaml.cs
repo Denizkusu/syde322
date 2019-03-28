@@ -15,6 +15,7 @@ namespace _322Mobile
     public UserProfile()
     {
       InitializeComponent();
+      useremail.Text = Application.Current.Properties["useremail"] as string; 
 
     }
     async void OnProfileButtonClicked(object sender, System.EventArgs e)
@@ -29,6 +30,7 @@ namespace _322Mobile
       };
 
       await Navigation.PopToRootAsync();
+      Application.Current.Properties["useremail"] = null;
       Application.Current.Properties["oauth-token"] = null;
       await Application.Current.SavePropertiesAsync(); 
 

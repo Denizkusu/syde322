@@ -102,12 +102,12 @@ namespace _322Mobile
         {
         
 
-        Label prodName = new Label { Text = phoneIds.Name,
+        Label prodName = new Label { Text = phoneIds.Name.ToUpper(),
         TextColor = Color.FromHex("#fff"),
         FontSize = 25, HorizontalOptions=LayoutOptions.Center
       };
 
-      Image img = new Image { Source = "xr.png", HeightRequest = 200, HorizontalOptions=LayoutOptions.Center};
+      Image img = new Image { Source = "xr.png", HeightRequest = 200, HorizontalOptions=LayoutOptions.Start};
 
       reviewStack.Children.Add(prodName);
       reviewStack.Children.Add(img);
@@ -136,19 +136,20 @@ namespace _322Mobile
 
             catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
             Label catName = new Label
             {
-              Text = item.Key,
+              Text =  char.ToUpper(item.Key[0]) + item.Key.Substring(1),
               TextColor = Color.FromHex("#fff"),
               FontSize = 25,
               HorizontalOptions = LayoutOptions.Start
             };
 
 
-            var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal };
+            var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal, Margin = new Thickness(0,10,0,0) };
 
             Label catDown = new Label
             {
@@ -175,21 +176,46 @@ namespace _322Mobile
 
             box.GestureRecognizers.Add(tapGestureRecognizer);
 
+            BoxView underline = new BoxView { HeightRequest = 5 , Color = Color.White};
+
             catContainer.Children.Add(catName, 0, 0);
             catContainer.Children.Add(catDown, 1, 0);
+
             catContainer.Children.Add(box, 0, 0);
+            catContainer.Children.Add(underline, 0, 1);
+            Grid.SetColumnSpan(underline, 2); 
 
 
-            catContainer.Children.Add(reviewScroll, 0, 1);
+            catContainer.Children.Add(reviewScroll, 0, 2);
             Grid.SetColumnSpan(reviewScroll, 2);
             Grid.SetColumnSpan(box, 2);
 
             StackLayout a1Review = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 20 };
+
             foreach (PhoneReview reviewTextItem in item.Value)
             {
-              Label reviewText = new Label { WidthRequest = 200, TextColor = Color.White, Margin = 0 };
-              reviewText.Text = reviewTextItem.ReviewText; 
-              a1Review.Children.Add(reviewText);
+              //BoxView reviewBox = new BoxView { WidthRequest = 200, BackgroundColor = Color.White };
+
+              StackLayout reviewItemStackSub = new StackLayout { }; 
+              var actualText = reviewTextItem.ReviewText; 
+              if (reviewTextItem.ReviewText.Length > 250) 
+              {
+                //truncate 
+                actualText = reviewTextItem.ReviewText.Substring(0, 250) + "..."; 
+              }
+
+
+              Label reviewText = new Label { WidthRequest = 200, TextColor = Color.White, Margin = 0};
+
+              //Editor reviewText = new Editor { WidthRequest = 200, TextColor = Color.Black, BackgroundColor = Color.White, IsReadOnly = true, HeightRequest = 150, FontSize= }; 
+
+              reviewText.Text = actualText;
+              //a1Review.Children.Add(reviewBox); 
+              Image reviewSourceLogo = new Image { Source = "theverge.png", HeightRequest = 50 , VerticalOptions=LayoutOptions.EndAndExpand};
+              reviewItemStackSub.Children.Add(reviewText);
+              reviewItemStackSub.Children.Add(reviewSourceLogo);
+
+              a1Review.Children.Add(reviewItemStackSub);
             }
 
             reviewScroll.Content = a1Review;
