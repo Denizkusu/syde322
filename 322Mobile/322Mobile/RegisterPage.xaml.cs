@@ -126,7 +126,7 @@ namespace _322Mobile
       Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
       RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      if (email.Text == null || (!rx.IsMatch(email.Text) && email.Text != "") ||  email.Text == "")
+      if (email.Text == null || (rx.IsMatch(email.Text) && email.Text != "") ||  email.Text == "")
       {
         emailCondition = false;
         button1.IsEnabled = false;
@@ -147,8 +147,9 @@ namespace _322Mobile
     void Handle_Unfocused_Password(object sender, Xamarin.Forms.FocusEventArgs e)
     {
       validatePassword();
+
+      passMatchCheck();
       initialEntry2 = false;
-      passMatchCheck(); 
     }
 
     void validatePassword()
@@ -156,7 +157,7 @@ namespace _322Mobile
       //min 8 char max 24, 1 special character, 1 number, 1 upper and 1 lowercase
       Regex rx = new Regex(@"(?=^.{8,24}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      if (password.Text == null || (!rx.IsMatch(password.Text) && password.Text != "") || password.Text == "")
+      if (password.Text == null || (rx.IsMatch(password.Text) && password.Text != "") || password.Text == "")
       {
         validPassCondition = true;
         passwordValidation.Text = "";
@@ -236,10 +237,20 @@ namespace _322Mobile
         else 
         {
           passMatchCondition = false;
-          passwordConfirmationValidation.Text = "Passwords do not match";
-          button1.IsEnabled = false; 
-          
+        if (initialEntry2)
+        {
+          passwordConfirmationValidation.Text = "";
+          button1.IsEnabled = false;
         }
+        else
+        {
+          passwordConfirmationValidation.Text = "Passwords do not match";
+          button1.IsEnabled = false;
+        }
+
+
+
+      }
 
 
     }
