@@ -21,8 +21,16 @@ namespace _322Mobile
     {
       //(temp).Text = username.Text + password.Text+email.Text;
       //DisplayAlert("yeet", "yeet", "yeet");
-      Navigation.InsertPageBefore(new StartPage(), Navigation.NavigationStack[0]);
-      await Navigation.PopToRootAsync(); 
+
+
+      Application.Current.MainPage = new NavigationPage(new StartPage())
+      {
+        BarBackgroundColor = Color.FromHex("1F2631")
+      };
+
+      await Navigation.PopToRootAsync();
+      Application.Current.Properties["oauth-token"] = null;
+      await Application.Current.SavePropertiesAsync(); 
 
       //await Navigation.PushAsync(new StartPage());
 

@@ -6,17 +6,12 @@ namespace _322Mobile
 {
   public partial class App : Application
   {
-    public static string Token { get; set; }
+
 
     public App()
     {
 
-      MainPage = new _322Mobile.MasterPageNavigation();
-      //MainPage = new NavigationPage(new ProductPage("abc"))
-      //MainPage = new LoginPage()
-      //{
-      //  //  //BarBackgroundColor = Color.FromHex("1F2631")
-      //};
+
 
 
     }
@@ -24,6 +19,20 @@ namespace _322Mobile
     protected override void OnStart()
     {
       // Handle when your app starts
+
+      //MainPage = new NavigationPage(new MainPage("abc"))
+      if (Application.Current.Properties.ContainsKey("oauth-token") && Application.Current.Properties["oauth-token"] != null) {
+        MainPage = new _322Mobile.MasterPageNavigation();
+      }
+      else {
+        MainPage = new NavigationPage(new StartPage())
+        {
+          BarBackgroundColor = Color.FromHex("1F2631")
+        };
+      }
+
+
+
     }
 
     protected override void OnSleep()

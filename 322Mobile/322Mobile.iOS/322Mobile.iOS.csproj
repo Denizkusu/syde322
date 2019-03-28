@@ -172,5 +172,6 @@
     <BundleResource Include="Resources\xs.png" />
     <BundleResource Include="Resources\xsmax.png" />
     <BundleResource Include="Resources\xsmax.jp2" />
+    <BundleResource Include="Resources\loading.png" />
   </ItemGroup>
 </Project>

@@ -39,7 +39,8 @@ namespace _322Mobile
       Regex rx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
       RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      if ((!rx.IsMatch(email.Text) && email.Text != "") || email.Text == null || email.Text == "")
+      
+      if (email.Text == null || (!rx.IsMatch(email.Text) && email.Text != "") || email.Text == "")
       {
         emailCondition = false;
         button1.IsEnabled = false;
@@ -51,6 +52,7 @@ namespace _322Mobile
         emailCondition = true;
         if (password.Text != null && password.Text != "")
         {
+         
           button1.IsEnabled = true;
         }
 
@@ -148,23 +150,14 @@ namespace _322Mobile
         }
         else
         {
-          App.Token = responseString;
+          //App.Token = responseString;
+          Application.Current.Properties["oauth-token"] = responseString;
+          await Application.Current.SavePropertiesAsync(); 
 
-          //if (Navigation.NavigationStack.Count() == 0)
-          //{
-          //  await Navigation.PushModalAsync(new MasterPageNavigation());
-          //}
-          //else
-          //{
-          //  Navigation.InsertPageBefore(new MasterPageNavigation(), Navigation.NavigationStack[0]);
-          //}
-          //MainPage = new NavigationPage(new MainPage());
-          //var test = new NavigationPage(new MasterPageNavigation());
-          Application.Current.MainPage = new NavigationPage(new MasterPageNavigation());
 
-          //await Navigation.PopToRootAsync();
+          Application.Current.MainPage = new MasterPageNavigation();
 
-          //await Navigation.PushAsync(new HomePage());
+
         }
 
 

@@ -14,10 +14,7 @@ namespace _322Mobile
 {
   public partial class SearchResultsPage : ContentPage
   {
-    //private static string[] phoneArray;
-    //private static string[] phonePriceArray;
-    //private static string[] phoneScoreArray;
-    //private static string[] pidar;
+
     public string SearchString { get; set; }
     private static Phone[] _phones;
     private static HttpClient client;
@@ -27,11 +24,13 @@ namespace _322Mobile
       InitializeComponent();
       client = new HttpClient();
       client.DefaultRequestHeaders.Authorization =
-          new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", App.Token);
+          new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Application.Current.Properties["oauth-token"] as string);
       SearchString = searchString;
+      initialLoad(); 
+
     }
 
-    protected override async void OnAppearing()
+    private async void initialLoad()
     {
       _phones = await SearchPhones();
       generateElements();
@@ -51,21 +50,31 @@ namespace _322Mobile
       string HttpGetUrl = String.Format("https://ehl.me/api/phone?phoneName={0}", SearchString);
       try
       {
+        Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest=100};
+
+        grid.Children.Add(loader, 0,1);
+        Grid.SetColumnSpan(loader, 2);
+        await loader.RotateTo(360, 500); 
         var response = await client.GetAsync(HttpGetUrl);
+        loader.IsVisible = false; 
 
-        //Marshall into Phone objectq
-        var responseString = await response.Content.ReadAsStringAsync();
 
-        //JsonConvert.s
-        Phone[] phones = JsonConvert.DeserializeObject<Phone[]>(responseString);
-        //var responseString = await response.Content.ReadAs;
+
         if (!response.IsSuccessStatusCode)
         {
-          //error.Text = "Invalid Credentials";
-          throw new Exception("Bad request");
+        
+          Label noResultsText = new Label { Text =  String.Format("Status Code: {0} {1}",  (int) response.StatusCode, response.StatusCode.ToString()), TextColor = Color.White };
+          grid.Children.Add(noResultsText, 0, 0);
+          Grid.SetColumnSpan(noResultsText, 2);
+          return null; 
         }
         else
         {
+          //Marshall into Phone objectq
+          var responseString = await response.Content.ReadAsStringAsync();
+
+
+          Phone[] phones = JsonConvert.DeserializeObject<Phone[]>(responseString);
           return phones;
         }
       }
@@ -79,125 +88,83 @@ namespace _322Mobile
         }
         else
         {
+
+          Label noResultsText = new Label { Text = "Malformed Response Error. Please try again." , TextColor = Color.White };
+          grid.Children.Add(noResultsText, 0, 0);
+          Grid.SetColumnSpan(noResultsText, 2);
+          return null; 
           //error.Text = ex.Message;
         }
         return null;
       }
 
 
-
-      //var numOfResults = 3;
-      //phoneArray = new string[numOfResults]; 
-
-      //phoneArray = new string[] { "abcd", "efgh", "ijkl", "hijk", "lmno" };
-      //phonePriceArray = new string[] { "12.2", "18.8", "92.4", "21.9", "18.3" };
-      //phoneScoreArray = new string[] { "3", "4", "9", "2.2", "90" };
-      //pidar = new string[] { "a3", "s4", "d9", "f2.2", "g90" };
-
-
     }
 
     void generateElements()
     {
-      //if (phoneArray.Length == 0)
-      //{
+      if (_phones != null)
+      {
+        if (_phones.Length == 0)
+        {
 
+          //No results
+          Label noResultsText = new Label { Text = "No Results Found", TextColor = Color.White };
+          grid.Children.Add(noResultsText, 0, 0);
+          Grid.SetColumnSpan(noResultsText, 2);
+        }
+        else
+        {
+          for (int i = 0; i < _phones.Length; i++)
+          {
+            StackLayout contentData = new StackLayout
+            {
+              BackgroundColor = Color.FromHex("#00aced"),
+              Padding = new Thickness(10, 10, 10, 10),
+              HeightRequest = 150
 
-      //}
-      //else
-      //{
-      //  for (int i = 0; i < phoneArray.Length; i++)
-      //  {
-      //    StackLayout contentData = new StackLayout
-      //    {
-      //      BackgroundColor = Color.FromHex("#00aced"),
-      //      Padding = new Thickness(10, 10, 10, 10),
-      //      HeightRequest = 150
-
-      //    };
-
-
-
-      //    contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 20, Text = phoneArray[i] });
-      //    contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Overall Score: " + phoneScoreArray[i] });
-      //    contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + phonePriceArray[i] });
-      //    //Image imageData = new Image
-      //    //{
-      //    //  Source = ImageSource.FromUri(new Uri("https://xamarin.com/content/images/pages/forms/example-app.png"))
-      //    //};
-      //    Image imageData = new Image { Source = "xr.png", HeightRequest = 150 };
-
-      //    imageData.ClassId = pidar[i];
-      //    contentData.ClassId = pidar[i];
-
-      //    var tapGestureRecognizer = new TapGestureRecognizer();
-      //    tapGestureRecognizer.Tapped += (s, e) =>
-      //    {
-      //      var parm = ((Image)s).ClassId;
-      //      Navigation.PushAsync(new ProductPage(parm));
-      //    };
-
-      //    var tapGestureRecognizer2 = new TapGestureRecognizer();
-      //    tapGestureRecognizer2.Tapped += (zo, ed) =>
-      //    {
-      //      var parm = ((StackLayout)zo).ClassId;
-      //      Navigation.PushAsync(new ProductPage(parm));
-      //    };
-
-      //    contentData.GestureRecognizers.Add(tapGestureRecognizer2);
-      //    imageData.GestureRecognizers.Add(tapGestureRecognizer);
-
-      //    grid.Children.Add(contentData, 0 + (i % 2), i);
-      //    grid.Children.Add(imageData, 1 - (i % 2), i);
-      //  }
+            };
 
 
 
+            contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 20, Text = _phones[i].Name.ToUpper() });
+            contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Overall Score: " + _phones[i].Score });
+            contentData.Children.Add(new Label { TextColor = Color.FromHex("#fff"), FontSize = 18, Text = "Price: $" + _phones[i].Price });
+
+            Image imageData = new Image { Source = "xr.png", HeightRequest = 150 };
+
+            imageData.ClassId = _phones[i].Id.ToString();
+            contentData.ClassId = _phones[i].Id.ToString();
+            var tempStore = _phones[i];
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) =>
+            { 
+              Navigation.PushAsync(new ProductPage(tempStore));
+            };
+
+            contentData.GestureRecognizers.Add(tapGestureRecognizer);
+            imageData.GestureRecognizers.Add(tapGestureRecognizer);
+
+            grid.Children.Add(contentData, 0 + (i % 2), i);
+            grid.Children.Add(imageData, 1 - (i % 2), i);
+          }
+
+        }
 
 
-      //}
-
-
-
-
+      }
     }
 
-    private async void tgr1(object sender, EventArgs e)
-    {
-      var parm = ((StackLayout)sender).ClassId;
-      await Navigation.PushAsync(new ProductPage(parm));
-
-    }
-
-
-    void OnProfileButtonClicked(object sender, System.EventArgs e)
-    {
-      //(temp).Text = username.Text + password.Text+email.Text;
-
-    }
-
-    void ForgotPasswordCommand(object sender, System.EventArgs e)
-    {
-      //(temp).Text = username.Text + password.Text+email.Text;
-      DisplayAlert("Alert", "You have been alerted", "OK");
-
-    }
 
 
     async void OnSearchCompletedAsync(object sender, System.EventArgs e)
     {
-      //DisplayAlert("Alert", "You have been alerted", "OK");
-
       await Navigation.PushAsync(new SearchResultsPage(searchText.Text));
       Navigation.RemovePage(Navigation.NavigationStack[1]);
-      //Navigation.InsertPageBefore(new HomePage(), this);
 
-      //(temp).Text = username.Text + password.Text+email.Text;
     }
-    void OnButC(object sender, System.EventArgs e)
-    {
-      //(temp).Text = username.Text + password.Text+email.Text;
-    }
+
   }
 
 

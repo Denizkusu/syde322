@@ -5,41 +5,103 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
+using _322Mobile.Models;
 using Xamarin.Forms;
-
+using Newtonsoft.Json;
 
 namespace _322Mobile
 {
   public partial class ProductPage : ContentPage
   {
-    private static string productIds; 
-    public ProductPage(string productId)
+    private static Phone phoneIds;
+    private static PhoneReview[] _reviews;
+    private static HttpClient client;
+    public ProductPage(Phone phoneId)
     {
       
       InitializeComponent();
-      productIds = productId; 
-      createElements(); 
-
+      phoneIds = phoneId;
+      client = new HttpClient();
+      client.DefaultRequestHeaders.Authorization =
+          new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Application.Current.Properties["oauth-token"] as string);
+      initialLoad();
 
     }
 
-    void createElements()
+    private async void initialLoad()
     {
-      //< StackLayout Spacing = "10" Margin = "20,20,20,0" x: Name = "mainStack" >
+      _reviews = await extractReviews();
+      createElements();
+    }
 
-      //< Label x: Name = "productName" TextColor = "#ffffff" FontSize = "25" Text = "ProductName" >
+    private async Task<PhoneReview[]> extractReviews()
+    {
+      if (phoneIds.Name != "")
+      {
+        //phoneIds = Uri.EscapeUriString(phoneIds.Id.ToString());
+      }
+      else
+      {
+        return null;
+      }
+      string HttpGetUrl = String.Format("https://ehl.me/api/review/{0}", phoneIds.Id);
+      try
+      {
+        Image loader = new Image { Source = "loading.png", HorizontalOptions = LayoutOptions.Center, HeightRequest = 100 };
 
-      //  </ Label >
-      //</ StackLayout >
+        reviewStack.Children.Add(loader);
+        await loader.RotateTo(360, 500);
+        var response = await client.GetAsync(HttpGetUrl);
+        loader.IsVisible = false;
 
-      string [] categories =  { "abc", "def", "ghi"};
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+
+          Label noResultsText = new Label { Text = String.Format("Status Code: {0} {1}", (int)response.StatusCode, response.StatusCode.ToString()), TextColor = Color.White };
+          reviewStack.Children.Add(noResultsText);
+          return null;
+        }
+        else
+        {
+          //Marshall into Phone objectq
+          var responseString = await response.Content.ReadAsStringAsync();
+
+          PhoneReview[] reviews = JsonConvert.DeserializeObject<PhoneReview[]>(responseString);
+          return reviews;
+        }
+      }
+      catch (WebException ex)
+      {
+
+        if (ex.Response is HttpWebResponse)
+        {
+          var httpResponse = ex.Response as HttpWebResponse;
+        }
+        else
+        {
+
+          Label noResultsText = new Label { Text = "Malformed Response Error. Please try again.", TextColor = Color.White };
+          reviewStack.Children.Add(noResultsText);
+          return null;
+        }
+        return null;
+      }
+    }
 
 
 
-      //StackLayout categoryContainer = new StackLayout { Spacing=10, 
-      //Margin = new Thickness(20,20,20,0) }
 
-      Label prodName = new Label { Text = productIds,
+
+      void createElements()
+    {
+      if (_reviews != null) { 
+        if (_reviews.Length != 0)
+        {
+        
+
+        Label prodName = new Label { Text = phoneIds.Name,
         TextColor = Color.FromHex("#fff"),
         FontSize = 25, HorizontalOptions=LayoutOptions.Center
       };
@@ -49,80 +111,100 @@ namespace _322Mobile
       reviewStack.Children.Add(prodName);
       reviewStack.Children.Add(img);
 
+          var reviewCategories = new Dictionary<string, List<PhoneReview>>();
 
-      foreach (string x in categories) {
-        //var catContainer = new StackLayout { Margin = new Thickness(20, 20, 20, 0) };
-        var catContainer = new Grid { Margin = new Thickness(20, 0, 20, 0), HorizontalOptions = LayoutOptions.FillAndExpand};
-
-        catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-        catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-        catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-        Label catName = new Label
-        {
-          Text = x,
-          TextColor = Color.FromHex("#fff"),
-          FontSize = 25,
-          HorizontalOptions = LayoutOptions.Start
-        };
-
-
-        var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal, HorizontalScrollBarVisibility = ScrollBarVisibility.Never };
-
-        Label catDown = new Label
-        {
-          Text = "▼",
-          TextColor = Color.FromHex("#fff"),
-          FontSize = 25,
-          HorizontalOptions = LayoutOptions.End
-        };
-
-        var tapGestureRecognizer = new TapGestureRecognizer();
-        tapGestureRecognizer.Tapped += (s, e) => {
-
-          if (reviewScroll.IsVisible)
+          foreach (PhoneReview z in _reviews)
           {
-            reviewScroll.IsVisible = false;
+            if (reviewCategories.ContainsKey(z.Category))
+            {
+              reviewCategories[z.Category].Add(z); 
+            }
+            else
+            {
+              reviewCategories.Add(z.Category, new List<PhoneReview> { z });
+            }
+
+
           }
-          else { reviewScroll.IsVisible = true; }
 
 
-        };
+          foreach (var item in reviewCategories)
+          {
+            //var catContainer = new StackLayout { Margin = new Thickness(20, 20, 20, 0) };
+            var catContainer = new Grid { Margin = new Thickness(20, 0, 20, 0), HorizontalOptions = LayoutOptions.FillAndExpand };
 
-        BoxView box = new BoxView {BackgroundColor=Color.Transparent, ClassId= x}; 
+            catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            catContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            catContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-        box.GestureRecognizers.Add(tapGestureRecognizer); 
+            Label catName = new Label
+            {
+              Text = item.Key,
+              TextColor = Color.FromHex("#fff"),
+              FontSize = 25,
+              HorizontalOptions = LayoutOptions.Start
+            };
 
-        catContainer.Children.Add(catName, 0,0);
-        catContainer.Children.Add(catDown, 1, 0);
-        catContainer.Children.Add(box, 0, 0);
+
+            var reviewScroll = new ScrollView { Orientation = ScrollOrientation.Horizontal };
+
+            Label catDown = new Label
+            {
+              Text = "▼",
+              TextColor = Color.FromHex("#fff"),
+              FontSize = 25,
+              HorizontalOptions = LayoutOptions.End
+            };
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+
+              if (reviewScroll.IsVisible)
+              {
+                reviewScroll.IsVisible = false;
+              }
+              else { reviewScroll.IsVisible = true; }
 
 
-        catContainer.Children.Add(reviewScroll, 0,1);
-        Grid.SetColumnSpan(reviewScroll, 2);
-        Grid.SetColumnSpan(box, 2);
+            };
 
-        StackLayout a1Review = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 20 };
-        for (int i = 0; i < 10; i++)
-        {
-          Label reviewText = new Label { WidthRequest = 200, TextColor = Color.White, Margin=0 }; 
-          reviewText.Text = "loremiheig wiufh eiuh gfiuehiugrh eiuhrgiueh iughieu hfiuahf iuwhfuiwhfiuwh ienfriunuiueufh ju rfjurh urhf uuf iurhiueuh fuiheurh ufhiueh rfiuheufiheiuh iurf iueuhriufheiurufhuehu uhr urhf uhruf hrfuh fiuhwiefjiojijij iejf iej fijfiej fjij ie fi fjiej fij foiejwoiej fwiuh giwehiehrgiuehiugheiurgh iure ";  
+            BoxView box = new BoxView { BackgroundColor = Color.Transparent };
 
-          a1Review.Children.Add(reviewText);
+            box.GestureRecognizers.Add(tapGestureRecognizer);
+
+            catContainer.Children.Add(catName, 0, 0);
+            catContainer.Children.Add(catDown, 1, 0);
+            catContainer.Children.Add(box, 0, 0);
+
+
+            catContainer.Children.Add(reviewScroll, 0, 1);
+            Grid.SetColumnSpan(reviewScroll, 2);
+            Grid.SetColumnSpan(box, 2);
+
+            StackLayout a1Review = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 20 };
+            foreach (PhoneReview reviewTextItem in item.Value)
+            {
+              Label reviewText = new Label { WidthRequest = 200, TextColor = Color.White, Margin = 0 };
+              reviewText.Text = reviewTextItem.ReviewText; 
+              a1Review.Children.Add(reviewText);
+            }
+
+            reviewScroll.Content = a1Review;
+            if (item.Key != "Overall")
+
+            {
+              reviewScroll.IsVisible = false;
+            }
+
+
+
+
+            reviewStack.Children.Add(catContainer);
+          }
+
         }
-
-        reviewScroll.Content = a1Review;
-        if (x != "abc")
-
-        { 
-        reviewScroll.IsVisible = false; 
-        }
-
-
-
-
-        reviewStack.Children.Add(catContainer);
       }
 
 
